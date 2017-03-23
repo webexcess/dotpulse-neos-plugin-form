@@ -13,7 +13,9 @@
 
 	$.onReady.Selectize = function() {
 		$('select').each(function () {
-			$(this).val($(this).find('option[selected]').val());
+			if ($(this).find('option[selected]').val()) {
+				$(this).val($(this).find('option[selected]').val());
+			}
 		});
 		
 		$('.styled').each(function() {
