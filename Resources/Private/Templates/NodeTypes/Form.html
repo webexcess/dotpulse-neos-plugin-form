@@ -1,6 +1,6 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
 {namespace form=TYPO3\Form\ViewHelpers}
-<div{attributes -> f:format.raw()}>
+<div id="{formIdentifier}">
 	<f:if condition="{formIdentifier}">
 		<f:then>
 			<form:render persistenceIdentifier="{formIdentifier}" presetName="{presetName}" overrideConfiguration="{overrideConfiguration}" />

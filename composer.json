@@ -2,7 +2,7 @@
     "name": "dotpulse/form",
     "type": "typo3-flow-plugin",
     "description": "Dotpulse Formulare",
-    "version": "2.1.3",
+    "version": "2.1.4",
     "require": {
         "typo3/neos": "2.*"
     },
