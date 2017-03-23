@@ -1,0 +1,79 @@
+.mf-input-spinner {
+	@extend .mf-input-field;
+
+	-moz-appearance: textfield;
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
+
+.mf-spinner {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+.mf-spinner-up,
+.mf-spinner-down {
+	user-select: none;
+	z-index: 1;
+	display: block;
+	width: 30px;
+	height: 12px;
+	color: $mf-label-color;
+	position: relative;
+	transition: transform $mf-transition-speed ease, color $mf-transition-speed ease;
+
+	&::after {
+		content: '';
+		width: 0;
+		height: 0;
+		position: absolute;
+		z-index: 1;
+		right: 0;
+		top: 6px;
+		transform: translateY(-50%);
+		border: 5px solid transparent;
+	}
+
+	&:hover {
+		color: $mf-focus-color;
+	}
+}
+
+.mf-spinner-up {
+	cursor: n-resize;
+
+	&::after {
+		border-top: none;
+		border-bottom-color: currentColor;
+	}
+
+	&:hover {
+		transform: translateY(-2px);
+	}
+
+	&:active {
+		transform: translateY(-4px);
+	}
+}
+
+.mf-spinner-down {
+	cursor: s-resize;
+
+	&::after {
+		border-bottom: none;
+		border-top-color: currentColor;
+	}
+
+	&:hover {
+		transform: translateY(2px);
+	}
+
+	&:active {
+		transform: translateY(4px);
+	}
+}

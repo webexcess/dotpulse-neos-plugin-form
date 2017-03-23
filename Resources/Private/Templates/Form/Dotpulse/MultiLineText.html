@@ -1,0 +1,4 @@
+<f:layout name="TYPO3.Form:Field" />
+<f:section name="field">
+	<f:form.textarea property="{element.identifier}" id="{element.uniqueIdentifier}" class="{element.renderingOptions.elementClassAttribute}" placeholder="{f:if(condition: element.properties.placeholder, then: '{f:translate(id: \'{element.identifier}.placeholder\', source: \'{element.renderingOptions.translationFile}\', package: \'{element.renderingOptions.translationPackage}\')}')}" rows="{element.properties.rows}" cols="{element.properties.cols}" required="{element.required}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+</f:section>

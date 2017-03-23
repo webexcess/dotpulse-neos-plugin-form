@@ -1,0 +1,143 @@
+.mf-select {
+	position: relative;
+	margin-top: $mf-margin-top;
+	margin-bottom: $mf-margin-bottom;
+
+	&.mf-select-open {
+		.mf-select-label {
+			color: $mf-focus-color;
+		}
+	}
+
+	&.mf-select-open,
+	&.mf-has-value {
+		.mf-select-label {
+			font-size: $mf-label-active-font-size;
+			top: $mf-label-active-top;
+		}
+	}
+}
+
+.mf-select-label {
+	position: absolute;
+	top: $mf-label-top;
+	pointer-events: none;
+	z-index: 1;
+	color: $mf-label-color;
+	font-size: $mf-font-size;
+	font-weight: normal;
+	transition: all $mf-transition-speed ease;
+}
+
+.mf-select-dropdown {
+	position: relative;
+	font-size: $mf-font-size;
+}
+
+.mf-select-dropdown-menu {
+	box-shadow: $mf-shadow;
+	overflow: hidden;
+	max-height: 0;
+	position: absolute;
+	background: $mf-dropdown-background;
+	left: 0;
+	right: 0;
+	transition: max-height $mf-transition-speed ease;
+	z-index: 100;
+
+	ul {
+		position: relative;
+		overflow-x: hidden;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		height: 100%;
+		max-height: $mf-dropdown-max-height;
+	}
+
+	ul,
+	li {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.mf-select-open & {
+		max-height: $mf-dropdown-max-height;
+	}
+
+	li {
+		padding: 5px 10px;
+		cursor: pointer;
+
+		&:hover {
+			background: $mf-focus-color;
+			color: $mf-focus-contrast-color;
+		}
+	}
+}
+
+.mf-select-btn {
+	width: 100%;
+	display: block;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid $mf-border-color;
+	text-align: left;
+	padding: 0;
+	outline: none;
+	position: relative;
+	height: $mf-height;
+
+
+	&::before {
+		position: absolute;
+		content: '';
+		bottom: -1px;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: $mf-focus-color;
+		z-index: 2;
+		transition: transform $mf-transition-speed ease;
+		transform: rotateY(90deg);
+
+		.mf-select-open & {
+			transform: rotateY(0deg);
+		}
+	}
+}
+
+.mf-select-hint {
+	position: absolute;
+	bottom: $mf-hint-bottom;
+	font-weight: $mf-hint-font-weight;
+	font-size: $mf-hint-font-size;
+	color: $mf-hint-color;
+	transition: color $mf-transition-speed ease;
+}
+
+.mf-has-error {
+	&.mf-select-open .mf-select-label,
+	.mf-select-hint {
+		color: $mf-error-color;
+	}
+
+	.mf-select-btn {
+		border-bottom-color: $mf-error-color;
+
+		&::before {
+			background: $mf-error-color;
+		}
+	}
+}
+
+.mf-is-success {
+	&.mf-select-open .mf-select-label,
+	.mf-select-hint {
+		color: $mf-success-color;
+	}
+
+	.mf-select-btn::before {
+		background: $mf-success-color;
+	}
+}

@@ -2,7 +2,7 @@
 <form:form action="index" object="{form}" method="post" section="{form.identifier}" class="{form.renderingOptions.containerClassAttribute}" enctype="{f:if(condition: form.renderingOptions.multipartForm, then: 'multipart/form-data')}">
 	<form:renderRenderable renderable="{form.currentPage}" />
 	<f:if condition="{form.renderingOptions.renderSubmitButton}">
-		<div class="{form.renderingOptions.buttonContainerClass}">
+		<div class="{form.renderingOptions.button.containerClassAttribute}">
 			<f:render partial="TYPO3.Form:Form/Navigation" arguments="{form: form}" />
 		</div>
 	</f:if>

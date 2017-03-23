@@ -1,11 +1,25 @@
-<f:layout name="TYPO3.Form:Field" />
+<f:layout name="TYPO3.Form:FieldSelect" />
 <f:section name="field">
 	<f:if condition="{element.required}">
 		<f:then>
-			<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" translate="{by: 'id', prefix: '{element.identifier}.', source: 'Forms', package: element.renderingOptions.translationPackage}" class="{element.properties.elementClassAttribute}" additionalAttributes="{required: true}" errorClass="{element.properties.elementErrorClassAttribute}" />
+			<f:if condition="{element.properties.prependOption}">
+				<f:then>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" translate="{by: element.renderingOptions.translateBy, prefix: 'forms.element.{element.identifier}.options.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" prependOptionLabel="" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{required: true}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:then>
+				<f:else>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" translate="{by: element.renderingOptions.translateBy, prefix: 'forms.element.{element.identifier}.options.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{required: true}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:else>
+			</f:if>
 		</f:then>
 		<f:else>
-			<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" translate="{by: 'id', prefix: '{element.identifier}.', source: 'Forms', package: element.renderingOptions.translationPackage}" class="{element.properties.elementClassAttribute}" errorClass="{element.properties.elementErrorClassAttribute}" />
+			<f:if condition="{element.properties.prependOption}">
+				<f:then>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" translate="{by: element.renderingOptions.translateBy, prefix: 'forms.element.{element.identifier}.options.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" prependOptionLabel="" class="{element.renderingOptions.elementClassAttribute}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:then>
+				<f:else>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" translate="{by: element.renderingOptions.translateBy, prefix: 'forms.element.{element.identifier}.options.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" class="{element.renderingOptions.elementClassAttribute}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:else>
+			</f:if>
 		</f:else>
 	</f:if>
 </f:section>

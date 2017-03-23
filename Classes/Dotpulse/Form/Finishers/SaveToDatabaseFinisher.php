@@ -1,9 +1,8 @@
 <?php
 namespace Dotpulse\Form\Finishers;
 
-use TYPO3\Eel\FlowQuery\FlowQuery;
 use TYPO3\Flow\Annotations as Flow;
-
+use Dotpulse\Form\Service\FormHelperService;
 use Dotpulse\Form\Domain\Repository\FormRepository;
 use Dotpulse\Form\Domain\Model\Form;
 
@@ -13,13 +12,16 @@ use Dotpulse\Form\Domain\Model\Form;
  * - folder (mandatory): folder relativ to the /Web folder
  * - allowedTypes (mandatory): array of allowed file types
  */
-class SaveToDatabaseFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher {
+class SaveToDatabaseFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher
+{
 
     /**
      * @var array
      */
     protected $defaultOptions = array(
-        'excludeFields' => array()
+        'excludeFields' => array(),
+        'dbLabels' => array(),
+        'debug' => false
     );
 
     /**
@@ -27,6 +29,12 @@ class SaveToDatabaseFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher {
      * @var FormRepository
      */
     protected $formRepository;
+
+    /**
+     * @Flow\Inject
+     * @var FormHelperService
+     */
+    protected $formHelperService;
 
     /**
      * @Flow\Inject
@@ -46,11 +54,6 @@ class SaveToDatabaseFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher {
      */
     protected $i18nService;
 
-    /**
-     * @Flow\Inject
-     * @var \TYPO3\Flow\I18n\Translator
-     */
-    protected $translator;
 
     /**
      * Executes this finisher
@@ -59,47 +62,63 @@ class SaveToDatabaseFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher {
      * @return void
      * @throws \TYPO3\Form\Exception\FinisherException
      */
-    protected function executeInternal() {
+    protected function executeInternal()
+    {
         $formRuntime = $this->finisherContext->getFormRuntime();
-        $response = $formRuntime->getResponse();
         $defaultLocale = $this->i18nService->getConfiguration()->getDefaultLocale();
-        
+
         $formIdentifier = $formRuntime->getIdentifier();
-        $formLabel = $formRuntime->getLabel();
         $formValues = $formRuntime->getRequest()->getArguments();
-        
-        $renderingOptions = $formRuntime->getRenderingOptions();
-        $translationPackage = $renderingOptions['translationPackage'];
 
         // Exclude Fields
         $excludeFields = $this->parseOption('excludeFields');
-        if ( is_string($excludeFields) ) {
+        if (is_string($excludeFields)) {
             $excludeFields = explode(',', str_replace(' ', '', trim($excludeFields)));
         }
 
         // Get Label from Form
-        if ( $this->yamlPersistenceManager->exists($formIdentifier) ) {
+        if ($this->yamlPersistenceManager->exists($formIdentifier)) {
             $formSettings = $this->yamlPersistenceManager->load($formIdentifier);
             $formLabel = $formSettings['label'];
-        }
 
-        $postValues = array();
-        foreach ($formValues as $key => $value) {
-            if ( !in_array($key, $excludeFields) ) {
-                $postValues[$key]['label'] = $this->translator->translateById($key, array(), null, $defaultLocale, 'Forms', $translationPackage);
-                $postValues[$key]['value'] = $value;
+            // Get data
+            $postValues = array();
+            foreach ($formValues as $key => $value) {
+                if (!in_array($key, $excludeFields)) {
+                    $element = $formRuntime->getFormDefinition()->getElementByIdentifier($key);
+                    if ($element) {
+                        if (array_key_exists($key, $this->parseOption('dbLabels')) && $this->parseOption('dbLabels')[$key] != '') {
+                            $postValues[$key]['label'] = $this->parseOption('dbLabels')[$key];
+                        } else {
+                            $postValues[$key]['label'] = $this->formHelperService->getTranslatedLabel('label', $element, $defaultLocale);
+                        }
+
+                        if (is_array($value)) {
+                            foreach ($value as $valueItem) {
+                                $translatedValue = $this->formHelperService->getTranslatedLabel('options.' . $valueItem, $element, $defaultLocale);
+                                $postValues[$key]['value'][] = $translatedValue == '' ? nl2br($valueItem) : nl2br($translatedValue);
+                            }
+                        } else {
+                            $translatedValue = $this->formHelperService->getTranslatedLabel('options.' . $value, $element, $defaultLocale);
+                            $postValues[$key]['value'] = $translatedValue == '' ? nl2br($value) : nl2br($translatedValue);
+                        }
+                    }
+                }
             }
-        }
-        // echo '<pre>'.print_r($postValues, true).'</pre>'; exit;
 
-        if ( !empty($postValues) ) {
-            $formData = new Form();
-            $formData->setFormIdentifier($formIdentifier);
-            $formData->setFormLabel($formLabel);
-            $formData->setFormValues($postValues);
-            $formData->setCrdate(new \DateTime());
-            $this->formRepository->add($formData);
-            $this->persistenceManager->persistAll();
+            if ($this->parseOption('debug') == true) {
+                \TYPO3\Flow\var_dump($postValues); exit;
+            } else {
+                if (!empty($postValues)) {
+                    $formData = new Form();
+                    $formData->setFormIdentifier($formIdentifier);
+                    $formData->setFormLabel($formLabel);
+                    $formData->setFormValues($postValues);
+                    $formData->setCrdate(new \DateTime());
+                    $this->formRepository->add($formData);
+                    $this->persistenceManager->persistAll();
+                }
+            }
         }
     }
 }

@@ -1,0 +1,30 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+<f:form.validationResults for="{element.identifier}">
+	<f:if condition="{element.renderingOptions.colElement}=='first'">
+		<div class="{element.renderingOptions.rowClassAttribute}">
+	</f:if>
+
+	<div class="{f:if(condition: element.renderingOptions.colElement, then: '{element.renderingOptions.colClassAttribute} ')}{element.renderingOptions.containerClassAttribute}{f:if(condition: element.renderingOptions.inlineStyle, then: ' {element.renderingOptions.inlineClassAttribute}', else: ' {element.renderingOptions.blockClassAttribute}')}{f:if(condition: validationResults.flattenedErrors, then: ' {element.renderingOptions.error.containerClassAttribute}')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+		<f:if condition="{element.renderingOptions.renderLabel}">
+			<label for="{element.uniqueIdentifier}" class="{element.renderingOptions.labelClassAttribute}"><f:translate id="{element.identifier}" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></label>
+		</f:if>
+		<div class="input">
+			<f:render section="field" />
+			<f:if condition="{validationResults.flattenedErrors}">
+				<span class="{element.renderingOptions.error.message.containerClassAttribute}">
+					<f:for each="{validationResults.errors}" as="error">
+						{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}
+						<br />
+					</f:for>
+				</span>
+			</f:if>
+			<f:if condition="{element.properties.elementDescription}">
+				<span class="{element.renderingOptions.description.elementClassAttribute}"><f:translate id="{element.identifier}.description" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" /></span>
+			</f:if>
+		</div>
+	</div>
+
+	<f:if condition="{element.renderingOptions.colElement}=='last'">
+		</div>
+	</f:if>
+</f:form.validationResults>

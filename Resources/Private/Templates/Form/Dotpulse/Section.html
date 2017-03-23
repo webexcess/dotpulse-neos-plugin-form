@@ -1,0 +1,11 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+{namespace dp=Dotpulse\Form\ViewHelpers}
+<fieldset id="{section.uniqueIdentifier}"{f:if(condition: section.properties.elementClassAttribute, then: ' class="{section.properties.elementClassAttribute}"')}>
+	<f:if condition="{section.renderingOptions.showLegend}">
+		<f:comment><legend><f:translate id="{section.identifier}" source="{section.renderingOptions.translationFile}" package="{section.renderingOptions.translationPackage}" /></legend></f:comment>
+		<legend>{section -> dp:translateElementProperty(property: 'label') -> f:format.nl2br()}</legend>
+	</f:if>
+	<f:for each="{section.elements}" as="element">
+		<form:renderRenderable renderable="{element}" />
+	</f:for>
+</fieldset>

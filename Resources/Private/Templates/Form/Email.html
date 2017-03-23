@@ -1,8 +1,24 @@
+{namespace dp=Dotpulse\Form\ViewHelpers}
 <table>
 	<f:for each="{form.request.arguments}" as="value" key="label">
 		<tr>
-			<td valign="top"><f:translate id="{label}" source="Forms" package="{form.renderingOptions.translationPackage}" />:</td>
-			<td><f:format.nl2br>{value}</f:format.nl2br></td>
+			<td valign="top"><f:translate id="{label}" source="{form.renderingOptions.translationFile}" package="{form.renderingOptions.translationPackage}" />:</td>
+			<td>
+				<f:if condition="{value}">
+					<dp:type.isArray value="{value}">
+						<f:then>
+							<ul>
+								<f:for each="{value}" as="arrayValue">
+									<li><f:format.raw><f:translate id="{label}.{arrayValue -> f:format.nl2br()}" source="{form.renderingOptions.translationFile}" package="{form.renderingOptions.translationPackage}">{arrayValue -> f:format.nl2br()}</f:translate></f:format.raw></li>
+								</f:for>
+							</ul>
+						</f:then>
+						<f:else>
+							<f:format.raw><f:translate id="{label}.{value -> f:format.nl2br()}" source="{form.renderingOptions.translationFile}" package="{form.renderingOptions.translationPackage}">{value -> f:format.nl2br()}</f:translate></f:format.raw>
+						</f:else>
+					</dp:type.isArray>
+				</f:if>
+			</td>
 		</tr>
 	</f:for>
 </table>

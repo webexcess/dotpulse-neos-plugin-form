@@ -1,14 +1,14 @@
 <f:if condition="{form.previousPage}">
-	<f:form.button name="__currentPage" value="{form.previousPage.index}" formnovalidate="formnovalidate" class="{form.renderingOptions.previousButtonClass}">Previous page</f:form.button>
+	<f:form.button name="__currentPage" value="{form.previousPage.index}" formnovalidate="formnovalidate" class="{form.renderingOptions.button.previousClassAttribute}">Previous page</f:form.button>
 </f:if>
 
 <f:if condition="{form.nextPage}">
 	<f:then>
-		<f:form.button name="__currentPage" value="{form.nextPage.index}" class="{form.renderingOptions.nextButtonClass}">Next page</f:form.button>
+		<f:form.button name="__currentPage" value="{form.nextPage.index}" class="{form.renderingOptions.button.nextClassAttribute}">Next page</f:form.button>
 	</f:then>
 	<f:else>
-		<f:form.button name="__currentPage" value="{form.pages -> f:count()}" class="{form.renderingOptions.submitButtonClass}">
-			<f:translate id="{f:if(condition:form.renderingOptions.submitButtonLabel, then:form.renderingOptions.submitButtonLabel, else: 'submitButton')}" source="Forms" package="{form.renderingOptions.translationPackage}">Submit</f:translate>
+		<f:form.button name="__currentPage" value="{form.pages -> f:count()}" class="{form.renderingOptions.button.submitClassAttribute}">
+			<f:translate id="{f:if(condition:form.renderingOptions.submitButtonLabel, then:form.renderingOptions.submitButtonLabel, else: 'submitButton')}" source="{form.renderingOptions.translationFile}" package="{form.renderingOptions.translationPackage}">Submit</f:translate>
 		</f:form.button>
 	</f:else>
 </f:if>

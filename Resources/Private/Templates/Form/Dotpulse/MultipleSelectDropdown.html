@@ -1,0 +1,11 @@
+<f:layout name="TYPO3.Form:Field" />
+<f:section name="field">
+	<f:if condition="{element.required}">
+		<f:then>
+			<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" multiple="multiple" translate="{by: 'id', prefix: '{element.identifier}.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{required: true}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+		</f:then>
+		<f:else>
+			<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" multiple="multiple" translate="{by: 'id', prefix: '{element.identifier}.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" class="{element.renderingOptions.elementClassAttribute}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+		</f:else>
+	</f:if>
+</f:section>

@@ -1,21 +1,23 @@
 {namespace form=TYPO3\Form\ViewHelpers}
+{namespace dp=Dotpulse\Form\ViewHelpers}
 <f:form.validationResults for="{element.identifier}">
-	<div class="{element.properties.containerClassAttribute}{f:if(condition: element.required, then: ' is-required')}{f:if(condition: validationResults.flattenedErrors, then: ' has-error')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
-		<f:if condition="{element.type}!='TYPO3.Form:Checkbox'">
-			<f:if condition="{element.properties.renderLabel}">
-				<p class="legend"><f:translate id="{element.identifier}" source="Forms" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></p>
-			</f:if>
+
+	<f:comment><!--container for 'TYPO3.Form:MultipleSelectCheckboxes' and 'TYPO3.Form:SingleSelectRadiobuttons'--></f:comment>
+	<f:if condition="{element.type}!='TYPO3.Form:Checkbox'">
+		<f:comment><!--check if 'inlineStyle' is set or not--></f:comment>
+		<div class="{f:if(condition: element.renderingOptions.inlineStyle, then: element.renderingOptions.inlineClassAttribute, else: element.renderingOptions.blockClassAttribute)}{f:if(condition: validationResults.flattenedErrors, then: ' {element.renderingOptions.error.containerClassAttribute}')}">
+
+		<f:comment><!--the rendering for the label depends, if 'renderLabel' is set--></f:comment>
+		<f:if condition="{element.renderingOptions.renderLabel}">
+			<f:comment><div class="{element.renderingOptions.labelClassAttribute}"><f:translate id="{element.identifier}" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></div></f:comment>
+			<div class="{element.renderingOptions.labelClassAttribute}">{element -> dp:translateElementProperty(property: 'label') -> f:format.nl2br()}<f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></div>
 		</f:if>
+	</f:if>
+
 		<f:render section="field" />
 
-		<f:if condition="{validationResults.flattenedErrors}">
-			<div>
-				<f:for each="{validationResults.errors}" as="error">
-					<label id="{element.uniqueIdentifier}-error" class="form-help" for="{element.uniqueIdentifier}">
-						{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}
-					</label>
-				</f:for>
-			</div>
-		</f:if>
-	</div>
+	<f:comment><!--close container for 'TYPO3.Form:MultipleSelectCheckboxes' and 'TYPO3.Form:SingleSelectRadiobuttons'--></f:comment>
+	<f:if condition="{element.type}!='TYPO3.Form:Checkbox'">
+		</div>
+	</f:if>
 </f:form.validationResults>

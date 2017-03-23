@@ -1,14 +1,15 @@
 {namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace dp=Dotpulse\Form\ViewHelpers}
 <f:layout name="BackendSubModule" />
 
 <f:section name="content">
 	<div class="neos-row-fluid">
 		<f:widget.paginate objects="{forms}" as="paginatedForms" configuration="{itemsPerPage: 30, maximumNumberOfLinks: 7}">
-			<table class="neos-table">
+			<table class="neos-table" style="overflow-x: auto; display: block;">
 				<thead>
 					<tr>
 						<f:for each="{labels}" key="identifier" as="label">
-							<th style="white-space: nowrap;">{label}</th>
+							<th style="white-space: nowrap;">{label -> f:format.stripTags()}</th>
 						</f:for>
 						<th style="white-space: nowrap;"><neos:backend.translate id="label.form.date" source="Modules" /></th>
 						<th>
@@ -26,7 +27,12 @@
 					<f:for each="{paginatedForms}" key="identifier" as="form">
 						<tr>
 							<f:for each="{form.formValues}" key="valueIdentifier" as="value">
-								<td style="white-space: nowrap;">{value.value}</td>
+								<td style="white-space: nowrap;">
+									<dp:type.isArray value="{value.value}">
+										<f:then><dp:iterator.implode content="{value.value -> f:format.stripTags()}" glue=", " /></f:then>
+										<f:else>{value.value -> f:format.stripTags()}</f:else>
+									</dp:type.isArray>
+								</td>
 							</f:for>
 							<td style="white-space: nowrap;">{form.crdate -> f:format.date(format: 'd.m.Y H:i:s')}</td>
 							<td class="neos-action">

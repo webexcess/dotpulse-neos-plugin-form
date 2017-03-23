@@ -1,0 +1,6 @@
+@include mf-container('textarea');
+
+.mf-textarea-field {
+	height: auto;
+	min-height: $mf-height;
+}

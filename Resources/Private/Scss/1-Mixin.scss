@@ -1,0 +1,134 @@
+@mixin mf-container($selector) {
+	.mf-#{$selector} {
+		position: relative;
+		margin-top: $mf-margin-top;
+		margin-bottom: $mf-margin-bottom;
+
+		&.mf-has-value .mf-#{$selector}-field ,
+		.mf-#{$selector}-field:focus {
+			color: $mf-color;
+			opacity: 1;
+
+			~ .mf-#{$selector}-label {
+				font-size: $mf-label-active-font-size;
+				top: $mf-label-active-top;
+				left: 0;
+			}
+		}
+
+		.mf-#{$selector}-hint {
+			position: absolute;
+			bottom: $mf-hint-bottom;
+		}
+
+		+ .mf-#{$selector}-hint {
+			margin-top: -$mf-margin-bottom;
+		}
+	}
+
+	.mf-#{$selector}-hint {
+		font-weight: $mf-hint-font-weight;
+		font-size: $mf-hint-font-size;
+		color: $mf-hint-color;
+		transition: color $mf-transition-speed ease;
+	}
+
+	.mf-#{$selector}-bar {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: $mf-border-color;
+		display: block;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: $mf-focus-color;
+			height: $mf-bar-height;
+			display: block;
+			transition: transform $mf-transition-speed ease;
+			transform: rotateY(90deg);
+		}
+	}
+
+	.mf-#{$selector}-label {
+		position: absolute;
+		top: $mf-label-top;
+		pointer-events: none;
+		padding-left: $mf-label-padding-left;
+		z-index: 1;
+		color: $mf-label-color;
+		font-size: $mf-font-size;
+		font-weight: normal;
+		transition: all $mf-transition-speed ease;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.mf-#{$selector}-field {
+		outline: none;
+		height: $mf-height;
+		display: block;
+		background: none;
+		padding: $mf-padding;
+		font-size: $mf-font-size;
+		border: 0 solid transparent;
+		line-height: $mf-line-height;
+		width: 100%;
+		color: transparent;
+		transition: all $mf-transition-speed ease;
+		box-shadow: none;
+		opacity: 0.001;
+
+		&:focus {
+			~ .mf-#{$selector}-bar::after {
+				transform: rotateY(0deg);
+			}
+
+			~ .mf-#{$selector}-label {
+				color: $mf-label-focus-color;
+			}
+		}
+	}
+
+	.mf-has-error {
+		.mf-#{$selector}-hint {
+			color: $mf-error-color;
+		}
+
+		.mf-#{$selector}-bar {
+			&,
+			&::after {
+				background: $mf-error-color;
+			}
+		}
+
+		.mf-#{$selector}-field:focus {
+			~ .mf-#{$selector}-label {
+				color: $mf-error-color;
+			}
+		}
+	}
+
+	.mf-is-success {
+		.mf-#{$selector}-hint {
+			color: $mf-success-color;
+		}
+
+		.mf-#{$selector}-bar::after {
+			background: $mf-success-color;
+		}
+
+		.mf-#{$selector}-field:focus {
+			~ .mf-#{$selector}-label {
+				color: $mf-success-color;
+			}
+		}
+	}
+}

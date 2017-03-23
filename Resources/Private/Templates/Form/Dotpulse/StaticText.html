@@ -1,0 +1,2 @@
+{namespace dp=Dotpulse\Form\ViewHelpers}
+<p{f:if(condition: element.renderingOptions.elementClassAttribute, then: ' class="{element.renderingOptions.elementClassAttribute}"')}>{element -> dp:translateElementProperty(property: 'label') -> f:format.nl2br()}</p>

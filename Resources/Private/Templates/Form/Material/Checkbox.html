@@ -1,11 +1,19 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+{namespace dp=Dotpulse\Form\ViewHelpers}
 <f:layout name="TYPO3.Form:FieldCheckboxAndRadio" />
 <f:section name="field">
-	<label class="{element.properties.elementClassAttribute}">
-		<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}" value="{element.properties.value}" errorClass="{element.properties.elementErrorClassAttribute}" />
-		<i class="helper"></i>
-		<span><f:translate id="{element.identifier}" source="Forms" package="{element.renderingOptions.translationPackage}" /></span>
-		<f:if condition="{element.required}">
-			<f:render partial="TYPO3.Form:Field/Required" />
+	<div class="{element.renderingOptions.elementClassAttribute}{f:if(condition: validationResults.flattenedErrors, then: ' {element.renderingOptions.error.containerClassAttribute}')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+		<label>
+			<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}" value="{element.properties.value}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+			<i class="mf-checkbox-button"></i>
+			<f:comment><span><f:translate id="{element.identifier}" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></span></f:comment>
+			<span>{element -> dp:translateElementProperty(property: 'label') -> f:format.nl2br()}<f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></span>
+		</label>
+
+		<f:if condition="{validationResults.flattenedErrors}">
+			<f:for each="{validationResults.errors}" as="error">
+				<div class="{element.renderingOptions.error.message.containerClassAttribute}">{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}</div>
+			</f:for>
 		</f:if>
-	</label>
+	</div>
 </f:section>

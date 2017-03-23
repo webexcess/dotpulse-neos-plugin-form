@@ -1,0 +1,46 @@
+@include mf-container('input');
+
+.mf-row {
+	margin-top: $mf-margin-top;
+	margin-bottom: $mf-margin-bottom;
+
+	.mf-select,
+	.mf-input {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	[class^='col-sm-'],
+	[class*=' col-sm-'] {
+		@include media-breakpoint-down(xs) {
+			.mf-select,
+			.mf-input {
+				margin-top: $mf-margin-top;
+			}
+
+			&:first-child {
+				.mf-select,
+				.mf-input {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+
+	[class^='col-md-'],
+	[class*=' col-md-'] {
+		@include media-breakpoint-down(sm) {
+			.mf-select,
+			.mf-input {
+				margin-top: $mf-margin-top;
+			}
+
+			&:first-child {
+				.mf-select,
+				.mf-input {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+}

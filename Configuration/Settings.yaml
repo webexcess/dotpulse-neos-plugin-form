@@ -6,7 +6,7 @@ TYPO3:
     userInterface:
       translation:
         autoInclude:
-          'Dotpulse.Form': ['Main', 'Forms', 'Modules', 'NodeTypes/*']
+          'Dotpulse.Form': ['Main', 'Forms', 'Modules']
     modules:
       administration:
         submodules:
@@ -21,80 +21,120 @@ TYPO3:
     yamlPersistenceManager:
       savePath: 'resource://Dotpulse.Form/Private/Forms/'
     presets:
-      default:
+      dotpulse:
+        parentPreset: 'default'
         title: 'Dotpulse'
         formElementTypes:
-          'TYPO3.Form:Base':
+          TYPO3.Form:Base:
             renderingOptions:
-              layoutPathPattern: 'resource://Dotpulse.Form/Private/Layouts/Default/{@type}.html'
-              partialPathPattern: 'resource://Dotpulse.Form/Private/Partials/Default/{@type}.html'
+              layoutPathPattern: 'resource://Dotpulse.Form/Private/Layouts/Dotpulse/{@type}.html'
+              partialPathPattern: 'resource://Dotpulse.Form/Private/Partials/Dotpulse/{@type}.html'
               translationPackage: 'Dotpulse.Form'
+              translationFile: 'Forms'
               translationErrorPackage: 'TYPO3.Flow'
-          #'TYPO3.Form:Page':
-          #  renderingOptions:
-          #    templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Page.html'
-          #'TYPO3.Form:Section':
-          #  properties:
-          #    rowClassAttribute: 'row'
-          #    colClassAttribute: 'col-sm-6'
-          #    colRenderPosition: FALSE # possible options: first || last
-          #  renderingOptions:
-          #    templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Section.html'
-          'TYPO3.Form:Form':
+              #translateBy: FALSE # 'id' || 'label'
+              translateBy: 'id'
+          TYPO3.Form:Form:
             renderingOptions:
-              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Form.html'
-              containerClassAttribute: ''
-              multipartForm: FALSE
-              renderSubmitButton: TRUE
-              buttonContainerClass: 'actions'
-              previousButtonClass: 'btn btn-cancel'
-              nextButtonClass: 'btn btn-primary'
-              submitButtonClass: 'btn btn-primary'
-          'TYPO3.Form:FormElement':
-            properties:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/Form.html'
+              containerClassAttribute: '' # class for <form />
+              multipartForm: FALSE # render enctype="multipart/form-data"
+              renderSubmitButton: TRUE # render submit-button on the end of page
+              button:
+                containerClassAttribute: 'actions' # container-class for button on the end of page
+                previousClassAttribute: 'btn btn-cancel'
+                nextClassAttribute: 'btn btn-primary'
+                submitClassAttribute: 'btn btn-primary'
+          TYPO3.Form:FormElement:
+            renderingOptions:
               containerClassAttribute: 'clearfix'
-              errorClassAttribute: 'error'
+              elementClassAttribute: ''
+              labelClassAttribute: ''
               renderLabel: TRUE
               rowClassAttribute: 'row'
               colClassAttribute: 'col-sm-6'
               colElement: FALSE # possible options: first || middle || last
-              #requiredClassAttribute: 'val-required'
-              #tooltipClass: 'white-popup mfp-hide'
-              #tooltipIconClass: 'fa fa-question-circle'
-          'TYPO3.Form:SingleLineText':
+              description:
+                containerClassAttribute: ''
+                elementClassAttribute: 'help-block'
+              error:
+                containerClassAttribute: 'error'
+                elementClassAttribute: ''
+                message:
+                  containerClassAttribute: 'help-inline'
+                  elementClassAttribute: ''
+          TYPO3.Form:Section:
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/Section.html'
+              showLegend: TRUE
+          TYPO3.Form:SingleLineText:
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/SingleLineText.html'
             properties:
-              elementClassAttribute: ''
               type: 'text'
+          TYPO3.Form:MultiLineText:
             renderingOptions:
-              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/SingleLineText.html'
-          'TYPO3.Form:MultiLineText':
-            properties:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/MultiLineText.html'
               elementClassAttribute: 'xxlarge'
+          TYPO3.Form:MultipleSelectCheckboxes:
             renderingOptions:
-              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/MultiLineText.html'
-          'TYPO3.Form:SingleSelectDropdown':
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/MultipleSelectCheckboxes.html'
+              inlineStyle: TRUE
+              inlineClassAttribute: 'inline'
+              blockClassAttribute: 'block'
+          TYPO3.Form:SingleSelectRadiobuttons:
             renderingOptions:
-              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/SingleSelectDropdown.html'
-          'Dotpulse.Form:Submit':
-            superTypes:
-              'TYPO3.Form:FormElement': TRUE
-              'TYPO3.Form:TextMixin': TRUE
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/SingleSelectRadiobuttons.html'
+              inlineStyle: TRUE
+              inlineClassAttribute: 'inline'
+              blockClassAttribute: 'block'
+          TYPO3.Form:SingleSelectDropdown:
             renderingOptions:
-              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Submit.html'
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/SingleSelectDropdown.html'
+              translateBy: 'id'
             properties:
+              prependOption: FALSE
+          TYPO3.Form:MultipleSelectDropdown:
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/MultipleSelectDropdown.html'
+          TYPO3.Form:StaticText:
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/StaticText.html'
+          Dotpulse.Form:Spinner:
+            superTypes:
+              TYPO3.Form:SingleLineText: TRUE
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/Spinner.html'
+              elementClassAttribute: 'input-spinner'
+            properties:
+              min: 0
+          Dotpulse.Form:Submit:
+            superTypes:
+              TYPO3.Form:FormElement: TRUE
+              TYPO3.Form:TextMixin: TRUE
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/Submit.html'
               containerClassAttribute: 'clearfix'
               elementClassAttribute: 'btn btn-primary'
-          'Dotpulse.Form:Column':
+          Dotpulse.Form:Column:
             superTypes:
-              'TYPO3.Form:FormElement': TRUE
+              TYPO3.Form:FormElement: TRUE
             implementationClassName: 'TYPO3\Form\FormElements\Section'
             renderingOptions:
-              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Column.html'
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Dotpulse/Column.html'
               renderableNameInTemplate: 'section'
-            properties:
               rowClassAttribute: 'row'
               colClassAttribute: 'col-sm-6'
               colRenderPosition: FALSE # possible options: first || last
+
+          Dotpulse.Form:ConditionalRequiredSingleLineText:
+            superTypes:
+              TYPO3.Form:SingleLineText: TRUE
+            implementationClassName: 'Dotpulse\Form\FormElements\ConditionalRequired'
+            #properties:
+            #  triggerPropertyField: 'location'
+            #  triggerPropertyType: 'checkbox' # input || checkbox
+            #  triggerPropertyValue: FALSE
 
         finisherPresets:
           'TYPO3.Form:Email':
@@ -104,7 +144,7 @@ TYPO3:
           'Dotpulse.Form:Email':
             implementationClassName: 'Dotpulse\Form\Finishers\EmailFinisher'
             options:
-              templatePathAndFilename: 'resource://Dotpulse.Form/Private/Templates/Form/Email.html'
+              templatePathAndFilename: 'resource://Dotpulse.Form/Private/Templates/Form/EmailTranslated.html'
               format: html
           'Dotpulse.Form:EmailWithAttachment':
             implementationClassName: 'Dotpulse\Form\Finishers\EmailWithAttachmentFinisher'
@@ -116,153 +156,195 @@ TYPO3:
             options: {}
 
       bootstrap:
-        parentPreset: 'default'
+        parentPreset: 'dotpulse'
         title: 'Bootstrap by Dotpulse'
         formElementTypes:
-          'TYPO3.Form:Base':
+          TYPO3.Form:Base:
             renderingOptions:
               layoutPathPattern: 'resource://Dotpulse.Form/Private/Layouts/Bootstrap/{@type}.html'
               partialPathPattern: 'resource://Dotpulse.Form/Private/Partials/Bootstrap/{@type}.html'
-          'TYPO3.Form:Page':
+          TYPO3.Form:Page:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Bootstrap/Page.html'
-          'TYPO3.Form:Form':
+          TYPO3.Form:Form:
             renderingOptions:
-              buttonContainerClass: 'form-footer'
-          'TYPO3.Form:FormElement':
-            properties:
+              button:
+                containerClassAttribute: 'form-footer'
+          TYPO3.Form:FormElement:
+            renderingOptions:
               containerClassAttribute: 'form-group'
-              errorClassAttribute: 'has-danger'
-          'TYPO3.Form:SingleLineText':
-            properties:
               elementClassAttribute: 'form-control'
-          'TYPO3.Form:MultiLineText':
-            properties:
+              rowClassAttribute: 'row form-row'
+              description:
+                elementClassAttribute: 'text-muted'
+              error:
+                containerClassAttribute: 'has-danger'
+                message:
+                  containerClassAttribute: 'text-muted'
+          TYPO3.Form:MultiLineText:
+            renderingOptions:
               elementClassAttribute: 'form-control'
-          'TYPO3.Form:Checkbox':
+          TYPO3.Form:Checkbox:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Bootstrap/Checkbox.html'
-            properties:
-              containerClassAttribute: 'checkbox'
-          'TYPO3.Form:MultipleSelectCheckboxes':
+              elementClassAttribute: 'checkbox'
+          TYPO3.Form:MultipleSelectCheckboxes:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Bootstrap/MultipleSelectCheckboxes.html'
-            properties:
-              elementClassAttribute: 'checkbox-inline'
-          'TYPO3.Form:SingleSelectRadiobuttons':
+              elementClassAttribute: 'checkbox'
+              inlineStyle: FALSE
+              inlineClassAttribute: 'checkbox-inline'
+          TYPO3.Form:SingleSelectRadiobuttons:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Bootstrap/SingleSelectRadiobuttons.html'
-            properties:
-              elementClassAttribute: 'radio-inline'
-          'TYPO3.Form:MultipleSelectDropdown':
-            properties:
-              elementClassAttribute: 'form-control'
-          'TYPO3.Form:SingleSelectionMixin':
-            properties:
-              elementClassAttribute: 'form-control'
-          'Dotpulse.Form:Submit':
-            properties:
+              elementClassAttribute: 'radio'
+              inlineStyle: FALSE
+              inlineClassAttribute: 'radio-inline'
+          Dotpulse.Form:Submit:
+            renderingOptions:
               containerClassAttribute: 'form-group'
 
       foundation:
-        parentPreset: 'default'
+        parentPreset: 'dotpulse'
         title: 'Foundation by Dotpulse'
         formElementTypes:
-          'TYPO3.Form:Base':
+          TYPO3.Form:Base:
             renderingOptions:
               layoutPathPattern: 'resource://Dotpulse.Form/Private/Layouts/Foundation/{@type}.html'
               partialPathPattern: 'resource://Dotpulse.Form/Private/Partials/Foundation/{@type}.html'
-          'TYPO3.Form:Page':
+          TYPO3.Form:Page:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Foundation/Page.html'
-          'TYPO3.Form:Form':
+          TYPO3.Form:Form:
             renderingOptions:
-              buttonContainerClass: 'form-footer'
-              previousButtonClass: 'button alert'
-              nextButtonClass: 'button'
-              submitButtonClass: 'button'
-          'TYPO3.Form:FormElement':
-            properties:
+              button:
+                containerClassAttribute: 'form-footer'
+                previousClassAttribute: 'button alert'
+                nextClassAttribute: 'button'
+                submitClassAttribute: 'button'
+          TYPO3.Form:FormElement:
+            renderingOptions:
               containerClassAttribute: 'form-group'
-              errorClassAttribute: 'is-invalid-label'
-              elementErrorClassAttribute: 'is-invalid-input'
+              elementClassAttribute: 'form-control'
+              rowClassAttribute: 'row form-row'
               colClassAttribute: 'columns small-6'
-          'TYPO3.Form:MultiLineText':
-            properties:
+              description:
+                elementClassAttribute: 'help-text'
+              error:
+                containerClassAttribute: 'is-invalid-label'
+                message:
+                  containerClassAttribute: 'text-muted'
+                  elementClassAttribute: 'is-invalid-input'
+          TYPO3.Form:MultiLineText:
+            renderingOptions:
               elementClassAttribute: ''
-          'TYPO3.Form:Checkbox':
+          TYPO3.Form:Checkbox:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Foundation/Checkbox.html'
-          'TYPO3.Form:MultipleSelectCheckboxes':
+          TYPO3.Form:MultipleSelectCheckboxes:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Foundation/MultipleSelectCheckboxes.html'
-          'TYPO3.Form:SingleSelectRadiobuttons':
+              inlineStyle: TRUE
+          TYPO3.Form:SingleSelectRadiobuttons:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Foundation/SingleSelectRadiobuttons.html'
-          'Dotpulse.Form:Submit':
-            properties:
+              inlineStyle: TRUE
+          Dotpulse.Form:Submit:
+            renderingOptions:
               containerClassAttribute: 'form-group'
               elementClassAttribute: 'button'
-          'Dotpulse.Form:Column':
-            properties:
+          Dotpulse.Form:Column:
+            renderingOptions:
               colClassAttribute: 'columns small-6'
 
       material:
-        parentPreset: 'default'
+        parentPreset: 'dotpulse'
         title: 'Material by Dotpulse'
         formElementTypes:
-          'TYPO3.Form:Base':
+          TYPO3.Form:Base:
             renderingOptions:
               layoutPathPattern: 'resource://Dotpulse.Form/Private/Layouts/Material/{@type}.html'
               partialPathPattern: 'resource://Dotpulse.Form/Private/Partials/Material/{@type}.html'
-          'TYPO3.Form:Page':
+          TYPO3.Form:Page:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/Page.html'
-          'TYPO3.Form:Form':
+          TYPO3.Form:Form:
             renderingOptions:
-              buttonContainerClass: 'form-footer'
-              previousButtonClass: 'btn btn-lg btn-default'
-              nextButtonClass: 'btn btn-lg btn-primary'
-              submitButtonClass: 'btn btn-lg btn-primary'
-          'TYPO3.Form:FormElement':
-            properties:
-              containerClassAttribute: 'form-group'
-              errorClassAttribute: 'has-danger'
-              rowClassAttribute: 'row form-row'
-          'TYPO3.Form:SingleLineText':
-            properties:
-              elementClassAttribute: 'form-control'
-          'TYPO3.Form:MultiLineText':
-            properties:
-              elementClassAttribute: 'form-control'
-          'TYPO3.Form:Checkbox':
+              button:
+                containerClassAttribute: 'mf-form-actions'
+                previousClassAttribute: 'mf-button mf-button-cancel'
+                nextClassAttribute: 'mf-button'
+                submitClassAttribute: 'mf-button'
+          TYPO3.Form:FormElement:
+            renderingOptions:
+              containerClassAttribute: ''
+              rowClassAttribute: 'row mf-row'
+              description:
+                elementClassAttribute: ''
+              error:
+                containerClassAttribute: 'mf-has-error'
+                message:
+                  containerClassAttribute: 'mf-input-hint'
+          TYPO3.Form:SingleLineText:
+            renderingOptions:
+              containerClassAttribute: 'mf-input'
+              elementClassAttribute: 'mf-input-field'
+              labelClassAttribute: 'mf-input-label'
+              helperBarClass: 'mf-input-bar'
+              description:
+                elementClassAttribute: 'mf-input-hint'
+          TYPO3.Form:MultiLineText:
+            renderingOptions:
+              containerClassAttribute: 'mf-textarea'
+              elementClassAttribute: 'mf-textarea-field'
+              labelClassAttribute: 'mf-textarea-label'
+              helperBarClass: 'mf-textarea-bar'
+              description:
+                elementClassAttribute: 'mf-textarea-hint'
+          TYPO3.Form:Checkbox:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/Checkbox.html'
-            properties:
-              containerClassAttribute: 'form-checkbox'
-              elementClassAttribute: 'checkbox'
-          'TYPO3.Form:MultipleSelectCheckboxes':
+              elementClassAttribute: 'mf-checkbox'
+              labelClassAttribute: 'mf-checkbox-legend'
+              description:
+                elementClassAttribute: 'mf-checkbox-hint'
+          TYPO3.Form:MultipleSelectCheckboxes:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/MultipleSelectCheckboxes.html'
-            properties:
-              containerClassAttribute: 'form-checkbox form-checkbox-inline'
-              elementClassAttribute: 'checkbox'
-              renderLabel: TRUE
-          'TYPO3.Form:SingleSelectRadiobuttons':
+              inlineClassAttribute: 'mf-checkbox-inline'
+              blockClassAttribute: 'mf-checkbox-block'
+              elementClassAttribute: 'mf-checkbox'
+              labelClassAttribute: 'mf-checkbox-legend'
+              description:
+                elementClassAttribute: 'mf-checkbox-hint'
+          TYPO3.Form:SingleSelectRadiobuttons:
             renderingOptions:
               templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/SingleSelectRadiobuttons.html'
+              inlineClassAttribute: 'mf-radio-inline'
+              blockClassAttribute: 'mf-radio-block'
+              elementClassAttribute: 'mf-radio'
+              labelClassAttribute: 'mf-radio-legend'
+              description:
+                elementClassAttribute: 'mf-radio-hint'
+          TYPO3.Form:SingleSelectDropdown:
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/SingleSelectDropdown.html'
+              containerClassAttribute: 'mf-select'
+              elementClassAttribute: 'mf-select-field'
+              labelClassAttribute: 'mf-select-label'
             properties:
-              containerClassAttribute: 'form-radio form-radio-inline'
-              elementClassAttribute: 'radio'
-              renderLabel: TRUE
-          'TYPO3.Form:MultipleSelectDropdown':
+              prependOption: TRUE
+          TYPO3.Form:MultipleSelectDropdown:
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/MultipleSelectDropdown.html'
+              containerClassAttribute: 'mf-select'
+              labelClassAttribute: 'mf-select-label'
             properties:
-              elementClassAttribute: 'form-control'
-          'TYPO3.Form:SingleSelectDropdown':
-            properties:
-              containerClassAttribute: 'form-group form-select'
-              elementClassAttribute: 'styled'
-          'Dotpulse.Form:Submit':
-            properties:
-              containerClassAttribute: 'form-group'
-              elementClassAttribute: 'btn btn-lg btn-primary'
+              prependOption: TRUE
+          Dotpulse.Form:Spinner:
+            renderingOptions:
+              elementClassAttribute: 'mf-input-spinner'
+          Dotpulse.Form:Submit:
+            renderingOptions:
+              containerClassAttribute: 'mf-form-actions'
+              elementClassAttribute: 'mf-button'

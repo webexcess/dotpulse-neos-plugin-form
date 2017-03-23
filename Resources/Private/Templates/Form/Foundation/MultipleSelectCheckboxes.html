@@ -1,20 +1,18 @@
 <f:layout name="TYPO3.Form:FieldCheckboxAndRadio" />
 <f:section name="field">
-	<f:for each="{element.properties.options}" as="label" key="value" iteration="inputInterator">
-
+	<f:for each="{element.properties.options}" as="label" key="value" iteration="inputIterator">
 		<f:if condition="{element.required}">
 			<f:then>
-				<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}_{inputInterator.cycle}" multiple="1" value="{value}" additionalAttributes="{required: true}" errorClass="{element.properties.elementErrorClassAttribute}" />
+				<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}-{inputIterator.index}" multiple="1" value="{value}" additionalAttributes="{required: true}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
 			</f:then>
 			<f:else>
-				<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}_{inputInterator.cycle}" multiple="1" value="{value}" errorClass="{element.properties.elementErrorClassAttribute}" />
+				<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}-{inputIterator.index}" multiple="1" value="{value}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
 			</f:else>
 		</f:if>
+		<label for="{element.uniqueIdentifier}-{inputIterator.index}">
+			<f:translate id="{element.identifier}.{value}" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" />
 
-		<label for="{element.uniqueIdentifier}_{inputInterator.cycle}">
-			<f:translate id="{element.identifier}.{value}" source="Forms" package="{element.renderingOptions.translationPackage}" />
-
-			<f:if condition="{element.properties.renderLabel}==0">
+			<f:if condition="{element.renderingOptions.renderLabel}==0">
 				<f:if condition="{element.required}">
 					<f:render partial="TYPO3.Form:Field/Required" />
 				</f:if>

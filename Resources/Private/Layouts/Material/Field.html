@@ -1,26 +1,46 @@
 {namespace form=TYPO3\Form\ViewHelpers}
+{namespace dp=Dotpulse\Form\ViewHelpers}
 <f:form.validationResults for="{element.identifier}">
-	<f:if condition="{element.properties.colElement}=='first'">
-		<div class="{element.properties.rowClassAttribute}">
+	<f:comment><!--render row, if 'colElement' has value 'first--></f:comment>
+	<f:if condition="{element.renderingOptions.colElement}=='first'">
+		<div class="{element.renderingOptions.rowClassAttribute}">
 	</f:if>
 
-	<div class="{f:if(condition: element.properties.colElement, then: '{element.properties.colClassAttribute} ')}{element.properties.containerClassAttribute}{f:if(condition: validationResults.flattenedErrors, then: ' {element.properties.errorClassAttribute}')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
-		<f:render section="field" />
-		<f:if condition="{validationResults.flattenedErrors}">
-			<f:for each="{validationResults.errors}" as="error">
-				<label id="{element.uniqueIdentifier}-error" class="form-help" for="{element.uniqueIdentifier}">{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}</label>
-			</f:for>
+		<f:comment><!--render col, if 'colElement' has value--></f:comment>
+		<f:if condition="{element.renderingOptions.colElement}">
+			<div class="{element.renderingOptions.colClassAttribute}">
 		</f:if>
-		<f:if condition="{element.properties.renderLabel}">
-			<label for="{element.uniqueIdentifier}" class="control-label"><f:translate id="{element.identifier}" source="Forms" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></label>
-		</f:if>
-		<i class="bar"></i>
-		<f:if condition="{element.properties.elementDescription}">
-			<small class="text-muted">{element.properties.elementDescription}</small>
-		</f:if>
-	</div>
 
-	<f:if condition="{element.properties.colElement}=='last'">
+			<f:comment><!--the formelement--></f:comment>
+			<div class="{element.renderingOptions.containerClassAttribute}{f:if(condition: validationResults.flattenedErrors, then: ' {element.renderingOptions.error.containerClassAttribute}')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+				<f:render section="field" />
+
+				<div class="{element.renderingOptions.helperBarClass}"></div>
+
+				<f:if condition="{element.renderingOptions.renderLabel}">
+					<f:comment><label for="{element.uniqueIdentifier}" class="{element.renderingOptions.labelClassAttribute}"><f:translate id="{f:if(condition: '{element.renderingOptions.translateBy}==\'label\'', then: element.label, else: element.identifier)}" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></label></f:comment>
+					<label for="{element.uniqueIdentifier}" class="{element.renderingOptions.labelClassAttribute}">{element -> dp:translateElementProperty(property: 'label') -> f:format.nl2br()}<f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></label>
+				</f:if>
+
+				<f:if condition="{validationResults.flattenedErrors}">
+					<f:for each="{validationResults.errors}" as="error">
+						<div class="{element.renderingOptions.error.message.containerClassAttribute}">{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}</div>
+					</f:for>
+				</f:if>
+			</div>
+
+			<f:if condition="{element.properties.elementDescription}">
+				<f:comment><div class="{element.renderingOptions.description.elementClassAttribute}"><f:translate id="{f:if(condition: '{element.renderingOptions.translateBy}==\'label\'', then: element.label, else: element.identifier)}.description" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" /></div></f:comment>
+				<div class="{element.renderingOptions.description.elementClassAttribute}">{element -> dp:translateElementProperty(property: 'description') -> f:format.nl2br()}</div>
+			</f:if>
+
+		<f:comment><!--close col, if 'colElement' has value--></f:comment>
+		<f:if condition="{element.renderingOptions.colElement}">
+			</div>
+		</f:if>
+
+	<f:comment><!--close row, if 'colElement' has value 'last--></f:comment>
+	<f:if condition="{element.renderingOptions.colElement}=='last'">
 		</div>
 	</f:if>
 </f:form.validationResults>

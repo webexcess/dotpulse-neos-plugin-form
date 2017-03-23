@@ -1,5 +1,25 @@
-{namespace dp=Dotpulse\Form\ViewHelpers}
-<f:layout name="TYPO3.Form:Field" />
+<f:layout name="TYPO3.Form:FieldSelect" />
 <f:section name="field">
-	<f:form.textfield property="{element.identifier}" id="{element.uniqueIdentifier}" data="{values: '{dp:renderValuesForSelect(identifier: \'{element.identifier}\', values: \'{element.properties.options}\', package: \'{element.renderingOptions.translationPackage}\')}'}" class="{element.properties.elementClassAttribute}" required="{element.required}" errorClass="{element.properties.elementErrorClassAttribute}" />
+	<f:if condition="{element.required}">
+		<f:then>
+			<f:if condition="{element.properties.prependOption}">
+				<f:then>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" multiple="multiple" translate="{by: 'id', prefix: '{element.identifier}.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" prependOptionLabel="" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{required: true}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:then>
+				<f:else>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" multiple="multiple" translate="{by: 'id', prefix: '{element.identifier}.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{required: true}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{element.properties.prependOption}">
+				<f:then>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" multiple="multiple" translate="{by: 'id', prefix: '{element.identifier}.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" prependOptionLabel="" class="{element.renderingOptions.elementClassAttribute}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:then>
+				<f:else>
+					<f:form.select property="{element.identifier}" id="{element.uniqueIdentifier}" options="{element.properties.options}" multiple="multiple" translate="{by: 'id', prefix: '{element.identifier}.', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage}" class="{element.renderingOptions.elementClassAttribute}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				</f:else>
+			</f:if>
+		</f:else>
+	</f:if>
 </f:section>

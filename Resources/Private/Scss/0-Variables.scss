@@ -1,0 +1,96 @@
+@function contrast-color($color) {
+	@if (lightness($color) > 50) {
+		@return #000; // Lighter backgorund, return dark color
+	} @else {
+		@return #fff; // Darker background, return light color
+	}
+}
+
+// Font Sizes
+$mf-font-size: 1rem !default;
+$mf-font-size-active: $mf-font-size * 0.75 !default;
+$mf-legend-font-size: $mf-font-size * 1 !default;
+$mf-legend-font-weight: 500 !default;
+$mf-hint-font-size: $mf-font-size * 0.6875 !default; // 11px
+$mf-hint-gap: $mf-hint-font-size * 1.5 !default;
+$mf-hint-font-weight: 400 !default;
+$mf-label-active-font-size: $mf-font-size * 0.75 !default;
+$mf-label-active-top: -$mf-font-size !default;
+
+// Margin & Paddings
+$mf-spacer: $mf-font-size / 8 !default;
+$mf-gap: $mf-font-size * 1.5 !default;
+$mf-spacer: $mf-font-size / 8 !default;
+$mf-legend-margin: 0 0 $mf-spacer 0 !default;
+$mf-hint-margin: $mf-spacer 0 !default;
+$mf-bar-height: 2px !default;
+$mf-margin-top: $mf-gap * 1.5 !default;
+$mf-margin-bottom: $mf-margin-top * 1.5 !default;
+$mf-label-padding-left: $mf-spacer !default;
+$mf-hint-bottom: -$mf-hint-gap !default;
+$mf-line-height: 1.875 !default; // 30px
+$mf-height: $mf-font-size * $mf-line-height !default;
+$mf-padding: $mf-spacer $mf-spacer ($mf-spacer / 2) !default;
+
+// Colors
+$mf-color: #333 !default;
+$mf-border-color: #999 !default;
+$mf-label-color: lighten($mf-border-color, 10%) !default;
+$mf-legend-color: $mf-color !default;
+$mf-active-color: darken($mf-border-color, 10%) !default;
+$mf-focus-color: #337ab7 !default;
+$mf-focus-contrast-color: contrast-color($mf-focus-color) !default;
+$mf-label-focus-color: $mf-focus-color !default;
+$mf-error-color: #d9534f !default;
+$mf-success-color: #259337 !default;
+$mf-hint-color: $mf-label-color !default;
+
+// Animation
+$mf-transition-speed: 0.28s !default;
+
+// Label
+$mf-label-top: $mf-font-size / 4 !default;
+
+$mf-dropdown-background: #fff !default;
+$mf-dropdown-max-height: 300px !default;
+$mf-shadow: 0 2px 2px 0 rgba(#000, 0.14), 0 3px 1px -2px rgba(#000, 0.2), 0 1px 5px 0 rgba(#000, 0.12) !default;
+
+// Checkbox
+$mf-checkbox-gap: $mf-font-size * 2 !default;
+$mf-checkbox-margin-bottom: $mf-spacer !default;
+$mf-checkbox-label-left: $mf-font-size * 1.5 !default;
+$mf-checkbox-color: $mf-color !default;
+$mf-checkbox-focus-color: $mf-focus-color !default;
+$mf-checkbox-size: $mf-font-size !default;
+$mf-checkbox-border-color: $mf-border-color !default;
+$mf-checkbox-top: $mf-font-size * 0.2 !default;
+$mf-checkbox-hint-font-weight: $mf-hint-font-weight !default;
+$mf-checkbox-hint-font-size: $mf-hint-font-size !default;
+$mf-checkbox-hint-color: $mf-hint-color !default;
+$mf-checkbox-inline-margin-right: $mf-font-size !default;
+$mf-checkbox-legend-font-weight: $mf-legend-font-weight !default;
+$mf-checkbox-legend-font-size: $mf-legend-font-size !default;
+$mf-checkbox-legend-margin: $mf-legend-margin !default;
+$mf-checkbox-legend-color: $mf-legend-color !default;
+
+// Radio Buttons
+$mf-radio-gap: $mf-font-size * 1.5 !default;
+$mf-radio-color: $mf-color !default;
+$mf-radio-margin-bottom: $mf-spacer !default;
+$mf-radio-size: $mf-font-size !default;
+$mf-radio-left: 0 !default;
+$mf-radio-top: 0 !default;
+$mf-radio-border-color: $mf-border-color !default;
+$mf-radio-active-color: $mf-active-color !default;
+$mf-radio-focus-color: $mf-focus-color !default;
+$mf-radio-inline-margin-right: $mf-font-size !default;
+$mf-radio-legend-font-weight: $mf-legend-font-weight !default;
+$mf-radio-legend-font-size: $mf-legend-font-size !default;
+$mf-radio-legend-margin: $mf-legend-margin !default;
+$mf-radio-hint-font-weight: $mf-hint-font-weight !default;
+$mf-radio-hint-font-size: $mf-hint-font-size !default;
+$mf-radio-hint-margin: $mf-hint-margin !default;
+$mf-radio-hint-color: $mf-hint-color !default;
+$mf-radio-label-top: 0 !default;
+$mf-radio-label-left: $mf-radio-gap !default;
+$mf-radio-legend-color: $mf-legend-color !default;

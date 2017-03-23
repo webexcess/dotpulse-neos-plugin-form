@@ -1,10 +1,8 @@
-<f:layout name="TYPO3.Form:FieldCheckboxAndRadio" />
+<f:layout name="TYPO3.Form:Field" />
 <f:section name="field">
-	<label>
-		<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}" value="{element.properties.value}" errorClass="{element.properties.elementErrorClassAttribute}" />
-		<f:translate id="{element.identifier}" source="Forms" package="{element.renderingOptions.translationPackage}" />
-		<f:if condition="{element.required}">
-			<f:render partial="TYPO3.Form:Field/Required" />
-		</f:if>
-	</label>
+	<div class="{element.renderingOptions.elementClassAttribute}">
+		<label>
+			<f:form.checkbox property="{element.identifier}" id="{element.uniqueIdentifier}" value="{element.properties.value}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+		</label>
+	</div>
 </f:section>

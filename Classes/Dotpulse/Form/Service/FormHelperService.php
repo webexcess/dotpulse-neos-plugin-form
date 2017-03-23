@@ -14,11 +14,16 @@ namespace Dotpulse\Form\Service;
 use TYPO3\Flow\Annotations as Flow;
 use Dotpulse\Form\Domain\Model\Form;
 use Dotpulse\Form\Domain\Repository\FormRepository;
+use TYPO3\Form\Core\Model\FormElementInterface;
+use TYPO3\Form\Core\Runtime\FormRuntime;
+use TYPO3\Flow\I18n\Translator;
+use TYPO3\Flow\Resource\Exception as ResourceException;
 
 /**
  * @Flow\Scope("singleton")
  */
-class FormHelperService {
+class FormHelperService
+{
 
     /**
      * @Flow\Inject
@@ -33,14 +38,21 @@ class FormHelperService {
     protected $persistenceManager;
 
     /**
+     * @Flow\Inject
+     * @var Translator
+     */
+    protected $translator;
+
+    /**
      * @param array $array
      * @param string $key
      * @param mixed $value can be a array or a string. the string can also be comma seperated
      * @return string
      */
-    public function searchInArrayByKey($array, $key, $value) {
+    public function searchInArrayByKey($array, $key, $value)
+    {
         $results = array();
-        if ( is_string($value) ) {
+        if (is_string($value)) {
             $value = explode(',', str_replace(' ', '', trim($value)));
         }
 
@@ -61,7 +73,8 @@ class FormHelperService {
      * @param array $forms
      * @return void
      */
-    protected function getLabels($forms) {
+    protected function getLabels($forms)
+    {
         $labels = array();
         foreach ($forms as $form) {
             $values = $form->getFormValues();
@@ -77,7 +90,8 @@ class FormHelperService {
      * @param string $identifier
      * @return void
      */
-    public function getLabelByIdentifier($forms, $identifier) {
+    public function getLabelByIdentifier($forms, $identifier)
+    {
         $labels = $this->getLabels($forms);
         return $labels[$identifier];
     }
@@ -86,7 +100,8 @@ class FormHelperService {
      * @param string $formIdentifier
      * @return void
      */
-    public function checkAndUpdateFormValues($formIdentifier) {
+    public function checkAndUpdateFormValues($formIdentifier)
+    {
         $forms = $this->formRepository->findByFormIdentifierSorted($formIdentifier);
         $labels = $this->getLabels($forms);
 
@@ -102,7 +117,55 @@ class FormHelperService {
             $this->formRepository->update($form);
         }
         $this->persistenceManager->persistAll();
-        
+
         return $labels;
+    }
+
+    /**
+     * @param string $property
+     * @param FormElementInterface $element
+     * @param \TYPO3\Flow\I18n\Locale|null $locale
+     * @return string
+     */
+    public function getTranslatedLabel($property, FormElementInterface $element, \TYPO3\Flow\I18n\Locale $locale = null)
+    {
+        if ($property === 'label') {
+            $defaultValue = $element->getLabel();
+        } elseif (strpos($property, 'options.') !== false && array_key_exists('options', $element->getProperties())) {
+            $key = substr($property, strpos($property, '.') + 1);
+            if ($key) {
+                $defaultValue = array_key_exists($key, $element->getProperties()['options']) ? $element->getProperties()['options'][$key] : '';
+            } else {
+                $defaultValue = '';
+            }
+        } else {
+            $defaultValue = isset($element->getProperties()[$property]) ? (string)$element->getProperties()[$property] : '';
+        }
+
+        $renderingOptions = $element->getRenderingOptions();
+        if (!isset($renderingOptions['translateBy'])) {
+            return $defaultValue;
+        }
+
+        $translateBy = $element->getIdentifier();
+        if ($renderingOptions['translateBy'] == 'label') {
+            $translateBy = $element->getLabel() ? $element->getLabel() : $element->getIdentifier();
+            if (strpos($property, 'options.') !== false && $defaultValue != '') {
+                $property = 'options.' . $defaultValue;
+            }
+        }
+
+        $translationId = sprintf('forms.%s.%s.%s', $renderingOptions['renderableNameInTemplate'], $translateBy, $property);
+
+        try {
+            $translation = $this->translator->translateById($translationId, [], null, $locale, $renderingOptions['translationFile'], $renderingOptions['translationPackage']);
+        } catch (ResourceException $exception) {
+            return $defaultValue;
+        }
+
+        if ($translation == $translationId) {
+            return $defaultValue;
+        }
+        return $translation === null ? $defaultValue : $translation;
     }
 }

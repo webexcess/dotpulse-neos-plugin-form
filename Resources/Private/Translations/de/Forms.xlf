@@ -17,6 +17,9 @@
 			<trans-unit id="firstname" xml:space="preserve">
 				<source>Vorname</source>
 			</trans-unit>
+			<trans-unit id="firstname.description" xml:space="preserve">
+				<source>Beschreibung</source>
+			</trans-unit>
 			<trans-unit id="firstname.tooltip" xml:space="preserve">
 				<source>Dies ist ein Tooltip-Text.</source>
 			</trans-unit>
@@ -53,8 +56,14 @@
 			<trans-unit id="email" xml:space="preserve">
 				<source>E-Mail</source>
 			</trans-unit>
+			<trans-unit id="email.placeholder" xml:space="preserve">
+				<source>max@muster.ch</source>
+			</trans-unit>
 			<trans-unit id="phone" xml:space="preserve">
 				<source>Telefon</source>
+			</trans-unit>
+			<trans-unit id="newsletter" xml:space="preserve">
+				<source>Newsletter</source>
 			</trans-unit>
 			<trans-unit id="day" xml:space="preserve">
 				<source>Tag</source>
@@ -67,6 +76,9 @@
 			</trans-unit>
 			<trans-unit id="tags" xml:space="preserve">
 				<source>Inhaltselement mit Tags</source>
+			</trans-unit>
+			<trans-unit id="tags." xml:space="preserve">
+				<source> </source>
 			</trans-unit>
 			<trans-unit id="tags.1" xml:space="preserve">
 				<source>Tag 1</source>
@@ -95,11 +107,17 @@
 			<trans-unit id="message" xml:space="preserve">
 				<source>Ihre Nachricht</source>
 			</trans-unit>
+			<trans-unit id="message.placeholder" xml:space="preserve">
+				<source>Hier kommt Ihre Nachricht</source>
+			</trans-unit>
 			
 			<trans-unit id="submitButton">
 				<source>Default Submit</source>
 			</trans-unit>
 			<trans-unit id="contactFormSend">
+				<source>Senden</source>
+			</trans-unit>
+			<trans-unit id="submit">
 				<source>Senden</source>
 			</trans-unit>
 		</body>

@@ -1,6 +1,9 @@
 <?php
 namespace Dotpulse\Form\Finishers;
 
+use TYPO3\Flow\Annotations as Flow;
+use Dotpulse\Form\Service\FormHelperService;
+
     /*                                                                        *
      * This script belongs to the TYPO3 Flow package "TYPO3.Form".            *
      *                                                                        *
@@ -50,7 +53,14 @@ class EmailFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher
         'excludeFields' => array(),
         'format' => self::FORMAT_HTML,
         'testMode' => false,
+        'debug' => false,
     );
+
+    /**
+     * @Flow\Inject
+     * @var FormHelperService
+     */
+    protected $formHelperService;
 
     /**
      * Executes this finisher
@@ -74,9 +84,33 @@ class EmailFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher
         }
         $formRuntime->getRequest()->setArguments($argumentsTmp);
 
+        $formValues = array();
+        foreach ($formRuntime->getRequest()->getArguments() as $key => $value) {
+            $element = $formRuntime->getFormDefinition()->getElementByIdentifier($key);
+
+            if ($element) {
+                $formValues[$key]['label'] = $this->formHelperService->getTranslatedLabel('label', $element);
+
+                if (is_array($value)) {
+                    foreach ($value as $valueItem) {
+                        $translatedValue = $this->formHelperService->getTranslatedLabel('options.' . $valueItem, $element);
+                        $formValues[$key]['value'][] = $translatedValue == '' ? nl2br($valueItem) : nl2br($translatedValue);
+                    }
+                } else {
+                    $translatedValue = $this->formHelperService->getTranslatedLabel('options.' . $value, $element);
+                    $formValues[$key]['value'] = $translatedValue == '' ? nl2br($value) : nl2br($translatedValue);
+                }
+            }
+        }
+
         $standaloneView = $this->initializeStandaloneView();
-        $standaloneView->assign('form', $formRuntime);
+        $standaloneView->assign('formValues', $formValues);
+        $standaloneView->assign('postValues', $formRuntime->getRequest()->getArguments());
         $message = $standaloneView->render();
+
+        if ($this->parseOption('debug')) {
+            echo $message; exit;
+        }
 
         $recipientAddress = null;
         if ( $this->parseOption('recipientAddress') != '' ) {
@@ -211,6 +245,44 @@ class EmailFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher
                 }
             }
         }
+
+
+        if ($optionName === 'subject') {
+            $renderingOptions = $this->finisherContext->getFormRuntime()->getRenderingOptions();
+            $node = $renderingOptions['node'];
+            if ($node->hasProperty('subject')) {
+                $recipientName = $node->getProperty('subject');
+                if(!empty($recipientName)) {
+                    return $recipientName;
+                }
+            }
+        }
+
+        // check if recipient name is provided by the node
+        // use the recipientName defined in the form as fallback
+        if ($optionName === 'recipientName') {
+            $renderingOptions = $this->finisherContext->getFormRuntime()->getRenderingOptions();
+            $node = $renderingOptions['node'];
+            if ($node->hasProperty('recipientName')) {
+                $recipientName = $node->getProperty('recipientName');
+                if(!empty($recipientName)) {
+                    return $recipientName;
+                }
+            }
+        }
+        // check if recipient address is provided by the node
+        // use the recipientAddress defined in the form as fallback
+        if ($optionName === 'recipientAddress') {
+            $renderingOptions = $this->finisherContext->getFormRuntime()->getRenderingOptions();
+            $node = $renderingOptions['node'];
+            if ($node->hasProperty('recipientAddress')) {
+                $recipientAddress = $node->getProperty('recipientAddress');
+                if(!empty($recipientAddress) && filter_var($recipientAddress, FILTER_VALIDATE_EMAIL)) {
+                    return $recipientAddress;
+                }
+            }
+        }
+
         return parent::parseOption($optionName);
     }
 }

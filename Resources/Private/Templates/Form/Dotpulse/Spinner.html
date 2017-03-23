@@ -1,0 +1,18 @@
+<f:layout name="TYPO3.Form:Field" />
+<f:section name="field">
+    <f:if condition="{element.properties.placeholder}">
+        <f:then>
+            <f:if condition="{element.renderingOptions.translateBy}=='label'">
+                <f:then>
+                    <f:form.textfield property="{element.identifier}" type="number" id="{element.uniqueIdentifier}" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{min: element.properties.min}" placeholder="{f:translate(id: '{element.label}.placeholder', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage)}" required="{element.required}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+                </f:then>
+                <f:else>
+                    <f:form.textfield property="{element.identifier}" type="number" id="{element.uniqueIdentifier}" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{min: element.properties.min}" placeholder="{f:translate(id: '{element.identifier}.placeholder', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage)}" required="{element.required}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+                </f:else>
+            </f:if>
+        </f:then>
+        <f:else>
+            <f:form.textfield property="{element.identifier}" type="number" id="{element.uniqueIdentifier}" class="{element.renderingOptions.elementClassAttribute}" additionalAttributes="{min: element.properties.min}" required="{element.required}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+        </f:else>
+    </f:if>
+</f:section>

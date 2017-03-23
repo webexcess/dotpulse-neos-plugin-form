@@ -1,0 +1,118 @@
+.mf-has-error {
+	.mf-radio-hint,
+	.mf-radio-button {
+		color: $mf-error-color;
+	}
+}
+
+.mf-is-success {
+	.mf-radio-hint {
+		color: $mf-success-color;
+	}
+}
+
+.mf-radio-block,
+.mf-radio-inline {
+	position: relative;
+	margin-top: $mf-radio-gap;
+	margin-bottom: $mf-radio-gap;
+	text-align: left;
+}
+
+.mf-radio-inline {
+	.mf-radio {
+		display: inline-block;
+		margin-right: $mf-radio-inline-margin-right;
+	}
+}
+
+.mf-radio-legend {
+	margin: $mf-radio-legend-margin;
+	font-weight: $mf-radio-legend-font-weight;
+	font-size: $mf-radio-legend-font-size;
+	color: $mf-radio-legend-color;
+}
+
+.mf-radio-hint {
+	margin: $mf-radio-hint-margin;
+	font-weight: $mf-radio-hint-font-weight;
+	font-size: $mf-radio-hint-font-size;
+	color: $mf-radio-hint-color;
+	transition: color $mf-transition-speed ease;
+}
+
+.mf-radio {
+	margin-bottom: $mf-radio-margin-bottom;
+
+	label {
+		position: relative;
+		cursor: pointer;
+		padding-left: $mf-radio-label-left;
+		text-align: left;
+		color: $mf-radio-color;
+		display: block;
+
+		&:hover .mf-radio-button {
+			color: $mf-radio-focus-color;
+		}
+
+		span {
+			display: block;
+			@if $mf-radio-label-top {
+				transform: translateY($mf-radio-label-top);
+			}
+		}
+	}
+
+	input {
+		// scss-lint:disable NestingDepth
+		width: auto;
+		opacity: 0.0001;
+		position: absolute;
+		left: 0;
+		margin: 0;
+		padding: 0;
+
+		&:checked {
+			~ .mf-radio-button {
+				&::after {
+					transform: scale(0.5);
+				}
+
+				&::before {
+					color: $mf-radio-focus-color;
+				}
+			}
+		}
+	}
+}
+
+.mf-radio-button {
+	position: absolute;
+	top: $mf-radio-top;
+	left: $mf-radio-left;
+	cursor: pointer;
+	display: block;
+	user-select: none;
+	color: $mf-radio-border-color;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		margin: ($mf-spacer * 2);
+		width: $mf-radio-size;
+		height: $mf-radio-size;
+		transition: transform $mf-transition-speed ease;
+		border-radius: 50%;
+		border: ($mf-radio-size / 8) solid currentColor;
+	}
+
+	&::after {
+		transform: scale(0);
+		background-color: $mf-radio-focus-color;
+		border-color: $mf-radio-focus-color;
+	}
+}

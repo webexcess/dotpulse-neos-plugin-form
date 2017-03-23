@@ -1,0 +1,23 @@
+{namespace dp=Dotpulse\Form\ViewHelpers}
+<table>
+	<f:for each="{formValues}" as="element" key="key">
+		<tr>
+			<td valign="top" align="right">{element.label -> f:format.raw()}:</td>
+			<td width="10"></td>
+			<td valign="top">
+				<f:if condition="{element.value}">
+					<dp:type.isArray value="{element.value}">
+						<f:then>
+							<f:for each="{element.value}" as="arrayValue">
+								- {arrayValue -> f:format.raw()}<br />
+							</f:for>
+						</f:then>
+						<f:else>
+							{element.value -> f:format.raw()}
+						</f:else>
+					</dp:type.isArray>
+				</f:if>
+			</td>
+		</tr>
+	</f:for>
+</table>

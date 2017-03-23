@@ -54,11 +54,12 @@ class FormController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
      */
     public function indexAction() {
         $returnArray = array();
+        $total = 0;
         $forms = $this->formRepository->findAll();
 
         foreach ($forms as $form) {
             if ( array_key_exists($form->getFormIdentifier(), $returnArray) ) {
-                $total++;
+                $total = $returnArray[$form->getFormIdentifier()]['totals'] + 1;
             } else {
                 $total = 1;
             }
@@ -243,8 +244,8 @@ class FormController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
             foreach ($forms as $form) {
                 $formLabel = $form->getFormLabel();
                 foreach ($form->getFormValues() as $key => $value) {
-                    $outputArr['label'][$key] = $value['label'];
-                    $outputArr['form_' . $i][$key] = $value['value'];
+                    $outputArr['label'][$key] = $this->br2nl($value['label']);
+                    $outputArr['form_' . $i][$key] = $this->br2nl(is_array($value['value']) ? implode(', ', $value['value']) : $value['value']);
                 }
                 $outputArr['form_' . $i]['date'] = $form->getCrdate()->format('Y-m-d H:i:s');
                 $i++;
@@ -261,6 +262,14 @@ class FormController extends \TYPO3\Neos\Controller\Module\AbstractModuleControl
             fclose($out);
         }
         exit;
+    }
+
+    /**
+     * @param string $input
+     * @return string
+     */
+    protected function br2nl($input) {
+        return preg_replace('/<br\s?\/?>/ius', "\n", str_replace("\n","",str_replace("\r","", htmlspecialchars_decode($input))));
     }
 
     protected function downloadSendHeaders($filename) {

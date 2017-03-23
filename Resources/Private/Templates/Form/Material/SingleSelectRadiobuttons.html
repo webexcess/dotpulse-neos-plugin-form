@@ -1,23 +1,42 @@
+{namespace form=TYPO3\Form\ViewHelpers}
 <f:layout name="TYPO3.Form:FieldCheckboxAndRadio" />
 <f:section name="field">
 	<f:for each="{element.properties.options}" as="label" key="value">
-		<label class="{element.properties.elementClassAttribute}">
-			<f:if condition="{element.required}">
-				<f:then>
-					<f:form.radio property="{element.identifier}" value="{value}" additionalAttributes="{required: true}" errorClass="{element.properties.elementErrorClassAttribute}" />
-				</f:then>
-				<f:else>
-					<f:form.radio property="{element.identifier}" value="{value}" errorClass="{element.properties.elementErrorClassAttribute}" />
-				</f:else>
-			</f:if>
-			<i class="helper"></i>
-			<span><f:translate id="{element.identifier}.{value}" source="Forms" package="{element.renderingOptions.translationPackage}" /></span>
+		<div class="{element.renderingOptions.elementClassAttribute}{f:if(condition: validationResults.flattenedErrors, then: ' {element.renderingOptions.error.containerClassAttribute}')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+			<label>
+				<f:form.radio property="{element.identifier}" value="{value}" errorClass="{element.renderingOptions.error.elementClassAttribute}" />
+				<i class="mf-radio-button"></i>
+				<span>
+					<f:comment><f:translate id="{element.identifier}.{value}" source="{element.renderingOptions.translationFile}" package="{element.renderingOptions.translationPackage}" /></f:comment>
+					<f:if condition="{element.renderingOptions.translateBy}=='label'">
+						<f:then>
+							<f:if condition="{element.label}">
+								<f:then>
+									{label -> f:translate(id: 'forms.element.{element.label}.options.{label}', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage) -> f:format.raw()}
+								</f:then>
+								<f:else>
+									{label -> f:translate(id: 'forms.element.{element.identifier}.options.{label}', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage) -> f:format.raw()}
+								</f:else>
+							</f:if>
+						</f:then>
+						<f:else>
+							{label -> f:translate(id: 'forms.element.{element.identifier}.options.{value}', source: element.renderingOptions.translationFile, package: element.renderingOptions.translationPackage) -> f:format.raw()}
+						</f:else>
+					</f:if>
 
-			<f:if condition="{element.properties.renderLabel}==0">
-				<f:if condition="{element.required}">
-					<f:render partial="TYPO3.Form:Field/Required" />
-				</f:if>
-			</f:if>
-		</label>
+					<f:if condition="{element.renderingOptions.renderLabel}==0">
+						<f:if condition="{element.required}">
+							<f:render partial="TYPO3.Form:Field/Required" />
+						</f:if>
+					</f:if>
+				</span>
+			</label>
+		</div>
 	</f:for>
+
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:for each="{validationResults.errors}" as="error">
+			<div class="{element.renderingOptions.error.message.containerClassAttribute}">{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}</div>
+		</f:for>
+	</f:if>
 </f:section>
