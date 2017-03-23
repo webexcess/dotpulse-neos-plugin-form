@@ -12,6 +12,10 @@
 	// jshint ignore:end
 
 	$.onReady.Selectize = function() {
+		$('select').each(function () {
+			$(this).val($(this).find('option[selected]').val());
+		});
+		
 		$('.styled').each(function() {
 			var $select = $(this);
 			var $input = null;
