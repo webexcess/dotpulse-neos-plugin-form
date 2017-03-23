@@ -1,0 +1,4 @@
+prototype(TYPO3.Neos.NodeTypes:Form) {
+	templatePath = 'resource://Dotpulse.Form/Private/Templates/NodeTypes/Form.html'
+	presetName = 'material'
+}

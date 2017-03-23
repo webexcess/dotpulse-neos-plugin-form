@@ -1,0 +1,21 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+<f:form.validationResults for="{element.identifier}">
+	<div class="{element.properties.containerClassAttribute}{f:if(condition: element.required, then: ' is-required')}{f:if(condition: validationResults.flattenedErrors, then: ' has-error')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+		<f:if condition="{element.type}!='TYPO3.Form:Checkbox'">
+			<f:if condition="{element.properties.renderLabel}">
+				<p class="legend"><f:translate id="{element.identifier}" source="Forms" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></p>
+			</f:if>
+		</f:if>
+		<f:render section="field" />
+
+		<f:if condition="{validationResults.flattenedErrors}">
+			<div>
+				<f:for each="{validationResults.errors}" as="error">
+					<label id="{element.uniqueIdentifier}-error" class="form-help" for="{element.uniqueIdentifier}">
+						{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}
+					</label>
+				</f:for>
+			</div>
+		</f:if>
+	</div>
+</f:form.validationResults>

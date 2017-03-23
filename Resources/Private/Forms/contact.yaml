@@ -1,0 +1,134 @@
+type: 'TYPO3.Form:Form'
+identifier: 'contact'
+label: 'Contact'
+renderingOptions:
+  submitButtonLabel: 'contactFormSend'
+renderables:
+  -
+    type: 'TYPO3.Form:Page'
+    identifier: 'page-one'
+    renderables:
+      -
+        type: 'TYPO3.Form:Section'
+        identifier: 'left'
+        properties:
+          colRenderPosition: 'first'
+        renderables:
+          -
+            type: 'TYPO3.Form:SingleSelectRadiobuttons'
+            identifier: 'title'
+            properties:
+              renderLabel: FALSE
+              options:
+                f: 'f'
+                m: 'm'
+            validators:
+              - identifier: 'TYPO3.Flow:NotEmpty'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'firstname'
+            validators:
+              - identifier: 'TYPO3.Flow:NotEmpty'
+            properties:
+              tooltip: 'This is a Tooltip'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'name'
+            validators:
+              - identifier: 'TYPO3.Flow:NotEmpty'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'street'
+            properties:
+              multiElement: 'first'
+              class: 'col-sm-8'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'streetNo'
+            properties:
+              multiElement: 'last'
+              class: 'col-sm-4'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'zip'
+            properties:
+              multiElement: 'first'
+              class: 'col-sm-4'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'city'
+            properties:
+              multiElement: 'last'
+              class: 'col-sm-8'
+          -
+            type: 'TYPO3.Form:SingleSelectDropdown'
+            identifier: 'country'
+            properties:
+              options:
+                '': ''
+                ch: 'ch'
+                de: 'de'
+                at: 'at'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'email'
+            validators:
+              - identifier: 'TYPO3.Flow:NotEmpty'
+              - identifier: 'TYPO3.Flow:EmailAddress'
+            properties:
+              type: 'email'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'phone'
+      -
+        type: 'TYPO3.Form:Section'
+        identifier: 'right'
+        properties:
+          colRenderPosition: 'last'
+        renderables:
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'day'
+            properties:
+              multiElement: 'first'
+              class: 'col-sm-4'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'month'
+            properties:
+              multiElement: 'middle'
+              class: 'col-sm-4'
+          -
+            type: 'TYPO3.Form:SingleLineText'
+            identifier: 'year'
+            properties:
+              multiElement: 'last'
+              class: 'col-sm-4'
+          -
+            type: 'TYPO3.Form:MultipleSelectDropdown'
+            identifier: 'tags'
+            properties:
+              options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+          -
+            type: 'TYPO3.Form:MultipleSelectCheckboxes'
+            identifier: 'contactType'
+            properties:
+              options:
+                email: 'email'
+                phone: 'phone'
+          -
+            type: 'TYPO3.Form:MultiLineText'
+            identifier: 'message'
+            properties:
+              rows: 8
+finishers:
+  -
+    identifier: 'TYPO3.Form:Confirmation'
+    options:
+      message: >
+        <p>Vielen Dank für Ihre Anfrage. Gerne setzen wir uns so rasch wie möglich mit Ihnen in Verbindung.</p>

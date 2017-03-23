@@ -1,0 +1,66 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="BackendSubModule" />
+
+<f:section name="content">
+	<div class="neos-row-fluid">
+		<table class="neos-table">
+			<thead>
+				<tr>
+					<th style="white-space: nowrap;"><neos:backend.translate id="label.name" source="Modules" /></th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<f:for each="{forms}" key="identifier" as="value" >
+					<tr>
+						<td style="white-space: nowrap;">{value.label}</td>
+						<td class="neos-action">
+							<div class="neos-pull-right">
+								<f:link.action action="renameLabel" arguments="{formIdentifier: formIdentifier, identifier: identifier}" class="neos-button neos-button-primary" title="{neos:backend.translate(id: 'clickToEdit', value: 'Click to edit', source: 'Modules', package: 'TYPO3.Neos')}">
+									<i class="icon-pencil icon-white"></i>
+								</f:link.action>
+								
+								<f:if condition="{value.delete}">
+									<f:then>
+										<button class="neos-button neos-button-danger" title="{neos:backend.translate(id: 'clickToDelete', value: 'Click to delete', source: 'Modules', package: 'TYPO3.Neos')}" data-toggle="modal" href="#label-{identifier}">
+											<i class="icon-trash icon-white"></i>
+										</button>
+										<div class="neos-hide" id="label-{identifier}">
+											<div class="neos-modal">
+												<div class="neos-modal-header">
+													<button type="button" class="neos-close neos-button" data-dismiss="modal"></button>
+													<div class="neos-header">{neos:backend.translate(id: 'form.label.deleteModalHeader', value: 'Delete label', arguments: {0: value.label}, source: 'Modules')}</div>
+													<div>
+														<div class="neos-subheader">
+															<p>{neos:backend.translate(id: 'form.label.deleteModalBody', value: 'Delete label.', source: 'Modules')}</p>
+														</div>
+													</div>
+												</div>
+												<div class="neos-modal-footer">
+													<a href="#" class="neos-button" data-dismiss="modal">{neos:backend.translate(id: 'cancel', value: 'Cancel', source: 'Modules', package: 'TYPO3.Neos')}</a>
+													<f:form action="deleteLabel" arguments="{formIdentifier: formIdentifier, identifier: identifier}" class="neos-inline">
+														<button type="submit" class="neos-button neos-button-danger" title="Delete">
+															{neos:backend.translate(id: 'form.label.deleteModalConfirm', value: 'Delete', source: 'Modules')}
+														</button>
+													</f:form>
+												</div>
+											</div>
+											<div class="neos-modal-backdrop neos-in"></div>
+										</div>
+									</f:then>
+									<f:else>
+										<button class="neos-button neos-button-danger neos-disabled"><i class="icon-trash icon-white"></i></button>
+									</f:else>
+								</f:if>
+							</div>
+						</td>
+					</tr>
+				</f:for>
+			</tbody>
+		</table>
+	</div>
+	<div class="neos-footer">
+		<f:link.action action="list" arguments="{formIdentifier: formIdentifier}" class="neos-button">{neos:backend.translate(id: 'cancel', value: 'Cancel', source: 'Modules', package: 'TYPO3.Neos')}</f:link.action>
+	</div>
+	<f:form action="index" id="postHelper" method="post"></f:form>
+</f:section>

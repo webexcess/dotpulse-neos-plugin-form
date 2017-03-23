@@ -1,0 +1,134 @@
+TYPO3:
+  Neos:
+    typoScript:
+      autoInclude:
+        'Dotpulse.Form': true
+    userInterface:
+      translation:
+        autoInclude:
+          'Dotpulse.Form': ['Main', 'Forms', 'Modules', 'NodeTypes/*']
+    modules:
+      administration:
+        submodules:
+          form:
+            label: 'Dotpulse.Form:Modules:form.label'
+            controller: '\Dotpulse\Form\Controller\Module\FormController'
+            description: 'Dotpulse.Form:Modules:form.description'
+            icon: 'icon-envelope-alt'
+            resource: 'Dotpulse.Form:Backend.Module.Form'
+
+  Form:
+    yamlPersistenceManager:
+      savePath: 'resource://Dotpulse.Form/Private/Forms/'
+    presets:
+      default:
+        title: 'Dotpulse'
+        formElementTypes:
+          'TYPO3.Form:Base':
+            renderingOptions:
+              layoutPathPattern: 'resource://Dotpulse.Form/Private/Layouts/Default/{@type}.html'
+              partialPathPattern: 'resource://Dotpulse.Form/Private/Partials/Default/{@type}.html'
+              translationPackage: 'Dotpulse.Form'
+              translationErrorPackage: 'TYPO3.Flow'
+          'TYPO3.Form:Page':
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Page.html'
+          'TYPO3.Form:Section':
+            properties:
+              rowClassAttribute: 'row'
+              colClassAttribute: 'col-sm-6'
+              colRenderPosition: FALSE # possible options: first || last
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Section.html'
+          'TYPO3.Form:Form':
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Form.html'
+              containerClassAttribute: 'form-validation'
+              renderSubmitButton: TRUE
+              buttonContainerClass: 'form-footer'
+              previousButtonClass: 'btn-riple'
+              nextButtonClass: 'btn-riple'
+              submitButtonClass: 'btn-riple'
+          'TYPO3.Form:FormElement':
+            properties:
+              containerClassAttribute: 'form-group'
+              requiredClassAttribute: 'val-required'
+              tooltipClass: 'white-popup mfp-hide'
+              tooltipIconClass: 'fa fa-question-circle'
+          'TYPO3.Form:SingleLineText':
+            properties:
+              elementClassAttribute: 'form-control'
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/SingleLineText.html'
+          'TYPO3.Form:MultiLineText':
+            properties:
+              elementClassAttribute: 'form-control'
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/MultiLineText.html'
+          'Dotpulse.Form:Submit':
+            superTypes:
+              'TYPO3.Form:FormElement': TRUE
+              'TYPO3.Form:TextMixin': TRUE
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Default/Submit.html'
+            properties:
+              containerClassAttribute: 'form-footer'
+              elementClassAttribute: 'button'
+
+        finisherPresets:
+          'TYPO3.Form:Email':
+            options:
+              templatePathAndFilename: resource://Dotpulse.Form/Private/Templates/Form/Email.html
+              format: html
+          'Dotpulse.Form:SaveToDatabase':
+            implementationClassName: 'Dotpulse\Form\Finishers\SaveToDatabaseFinisher'
+            options: {}
+
+      material:
+        parentPreset: 'default'
+        title: 'Material by Dotpulse'
+        formElementTypes:
+          'TYPO3.Form:Base':
+            renderingOptions:
+              layoutPathPattern: 'resource://Dotpulse.Form/Private/Layouts/Material/{@type}.html'
+              partialPathPattern: 'resource://Dotpulse.Form/Private/Partials/Material/{@type}.html'
+          'TYPO3.Form:Form':
+            renderingOptions:
+              previousButtonClass: 'btn btn-lg btn-default'
+              nextButtonClass: 'btn btn-lg btn-primary'
+              submitButtonClass: 'btn btn-lg btn-primary'
+          'TYPO3.Form:Checkbox':
+            properties:
+              containerClassAttribute: 'form-checkbox'
+              elementClassAttribute: 'checkbox'
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/Checkbox.html'
+          'TYPO3.Form:MultipleSelectCheckboxes':
+            properties:
+              containerClassAttribute: 'form-checkbox form-checkbox-inline'
+              elementClassAttribute: 'checkbox'
+              renderLabel: TRUE
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/MultipleSelectCheckboxes.html'
+          'TYPO3.Form:MultipleSelectDropdown':
+            properties:
+              containerClassAttribute: 'form-group form-select'
+              elementClassAttribute: 'styled'
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/MultipleSelectDropdown.html'
+          'TYPO3.Form:SingleSelectRadiobuttons':
+            properties:
+              containerClassAttribute: 'form-radio form-radio-inline'
+              elementClassAttribute: 'radio'
+              renderLabel: TRUE
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/SingleSelectRadiobuttons.html'
+          'TYPO3.Form:SingleSelectDropdown':
+            properties:
+              containerClassAttribute: 'form-group form-select'
+              elementClassAttribute: 'styled'
+            renderingOptions:
+              templatePathPattern: 'resource://Dotpulse.Form/Private/Templates/Form/Material/SingleSelectDropdown.html'
+          'Dotpulse.Form:Submit':
+            properties:
+              elementClassAttribute: 'btn-max button'

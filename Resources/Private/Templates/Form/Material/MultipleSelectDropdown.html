@@ -1,0 +1,5 @@
+{namespace dp=Dotpulse\Form\ViewHelpers}
+<f:layout name="TYPO3.Form:Field" />
+<f:section name="field">
+	<f:form.textfield property="{element.identifier}" id="{element.uniqueIdentifier}" data="{values: '{dp:renderValuesForSelect(identifier: \'{element.identifier}\', values: \'{element.properties.options}\', package: \'{element.renderingOptions.translationPackage}\')}'}" class="{element.properties.elementClassAttribute}" required="{element.required}" errorClass="{element.properties.elementErrorClassAttribute}" />
+</f:section>

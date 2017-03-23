@@ -1,0 +1,8 @@
+<table>
+	<f:for each="{form.request.arguments}" as="value" key="label">
+		<tr>
+			<td valign="top"><f:translate id="{label}" source="Forms" package="{form.renderingOptions.translationPackage}" />:</td>
+			<td><f:format.nl2br>{value}</f:format.nl2br></td>
+		</tr>
+	</f:for>
+</table>

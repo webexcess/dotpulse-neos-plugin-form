@@ -1,0 +1,14 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+<f:if condition="{section.properties.colRenderPosition}=='first'">
+	<div class="{section.properties.rowClassAttribute}">
+</f:if>
+
+	<div class="{section.properties.colClassAttribute}">
+		<f:for each="{section.elements}" as="element">
+			<form:renderRenderable renderable="{element}" />
+		</f:for>
+	</div>
+
+<f:if condition="{section.properties.colRenderPosition}=='last'">
+	</div>
+</f:if>

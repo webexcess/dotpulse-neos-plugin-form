@@ -1,0 +1,22 @@
+{
+    "name": "dotpulse/form",
+    "type": "typo3-flow-plugin",
+    "description": "Dotpulse Formulare",
+    "version": "2.1.3",
+    "require": {
+        "typo3/neos": "2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Dotpulse\\Form": "Classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Samuel Hauser",
+            "email": "samuel.hauser@webexcess.ch",
+            "homepage": "https://webexcess.github.io/open-source-initiative/",
+            "role": "Developer"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="BackendSubModule" />
+
+<f:section name="content">
+	<f:form action="updateLabel">
+		<f:form.hidden name="formIdentifier" value="{formIdentifier}" />
+		<f:form.hidden name="identifier" value="{identifier}" />
+
+		<div class="neos-row-fluid">
+			<fieldset class="neos-span5">
+				<legend>{neos:backend.translate(id: 'label.legend', value: 'Label data', source: 'Modules')}</legend>
+				
+				<div class="neos-control-group">
+					<label class="neos-control-label" for="name">{neos:backend.translate(id: 'label.name', value: 'Name', source: 'Modules')}</label>
+					<div class="neos-controls">
+						<f:form.textfield name="name" id="name" value="{value}" class="neos-span12" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="neos-footer">
+			<f:link.action action="editLabel" arguments="{formIdentifier: formIdentifier}" class="neos-button">{neos:backend.translate(id: 'cancel', value: 'Cancel', source: 'Modules', package: 'TYPO3.Neos')}</f:link.action>
+			<f:form.submit value="{neos:backend.translate(id: 'label.updateButton', value: 'Save', source: 'Modules')}" class="neos-button neos-button-primary" />
+		</div>
+	</f:form>
+</f:section>

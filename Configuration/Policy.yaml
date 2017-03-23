@@ -1,0 +1,18 @@
+privilegeTargets:
+  'TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
+    'Dotpulse.Form:Backend.Module.Form':
+      matcher: 'method(Dotpulse\Form\Controller\Module\FormController->(index|list|delete|deleteAll|export)Action())'
+    'Dotpulse.Form:Backend.Module.EditLabel':
+      matcher: 'method(Dotpulse\Form\Controller\Module\FormController->(editLabel|renameLabel|updateLabel|deleteLabel)Action())'
+
+roles:
+  'TYPO3.Neos:Editor':
+    privileges:
+      -
+        privilegeTarget: 'Dotpulse.Form:Backend.Module.Form'
+        permission: GRANT
+  'TYPO3.Neos:Administrator':
+    privileges:
+      -
+        privilegeTarget: 'Dotpulse.Form:Backend.Module.EditLabel'
+        permission: GRANT

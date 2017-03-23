@@ -1,0 +1,16 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace form=TYPO3\Form\ViewHelpers}
+<div{attributes -> f:format.raw()}>
+	<f:if condition="{formIdentifier}">
+		<f:then>
+			<form:render persistenceIdentifier="{formIdentifier}" presetName="{presetName}" overrideConfiguration="{overrideConfiguration}" />
+		</f:then>
+		<f:else>
+			<f:if condition="{neos:rendering.inBackend()}">
+				<div class="alert alert-danger" role="alert">
+					<p><f:translate id="error.select.form" package="Dotpulse.Form" /></p>
+				</div>
+			</f:if>
+		</f:else>
+	</f:if>
+</div>

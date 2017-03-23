@@ -1,0 +1,35 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="BackendSubModule" />
+
+<f:section name="content">
+	<div class="neos-row-fluid">
+		<table class="neos-table">
+			<thead>
+				<tr>
+					<th><neos:backend.translate id="label.form.formlabel" source="Modules" /></th>
+					<th><neos:backend.translate id="label.form.totals" source="Modules" /></th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<f:for each="{forms}" key="identifier" as="form">
+					<tr>
+						<td>{form.label}</td>
+						<td><span class="neos-badge neos-badge-inverse">{form.totals}</span></td>
+						<td class="neos-action">
+							<div class="neos-pull-right">
+								<f:link.action action="list" arguments="{formIdentifier: identifier}" class="neos-button neos-button-primary" title="{neos:backend.translate(id: 'clickToView', value: 'Click to view', source: 'Modules')}">
+									<i class="icon-info-sign icon-white"></i>
+								</f:link.action>
+								<f:link.action action="export" arguments="{formIdentifier: identifier}" target="_blank" class="neos-button neos-button-primary" title="{neos:backend.translate(id: 'form.clickToExport', value: 'Export', source: 'Modules')}">
+									<i class="icon-download icon-white"></i>
+								</f:link.action>
+							</div>
+						</td>
+					</tr>
+				</f:for>
+			</tbody>
+		</table>
+	</div>
+	<div class="neos-footer"></div>
+</f:section>

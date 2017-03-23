@@ -1,0 +1,94 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="BackendSubModule" />
+
+<f:section name="content">
+	<div class="neos-row-fluid">
+		<f:widget.paginate objects="{forms}" as="paginatedForms" configuration="{itemsPerPage: 30, maximumNumberOfLinks: 7}">
+			<table class="neos-table">
+				<thead>
+					<tr>
+						<f:for each="{labels}" key="identifier" as="label">
+							<th style="white-space: nowrap;">{label}</th>
+						</f:for>
+						<th style="white-space: nowrap;"><neos:backend.translate id="label.form.date" source="Modules" /></th>
+						<th>
+							<f:security.ifAccess privilegeTarget="Dotpulse.Form:Backend.Module.EditLabel">
+								<div class="neos-pull-right">
+									<f:link.action action="editLabel" arguments="{formIdentifier: formIdentifier}" title="{neos:backend.translate(id: 'clickToEdit', value: 'Click to edit', source: 'Modules', package: 'TYPO3.Neos')}">
+										<i class="icon-pencil"></i>
+									</f:link.action>
+								</div>
+							</f:security.ifAccess>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<f:for each="{paginatedForms}" key="identifier" as="form">
+						<tr>
+							<f:for each="{form.formValues}" key="valueIdentifier" as="value">
+								<td style="white-space: nowrap;">{value.value}</td>
+							</f:for>
+							<td style="white-space: nowrap;">{form.crdate -> f:format.date(format: 'd.m.Y H:i:s')}</td>
+							<td class="neos-action">
+								<div class="neos-pull-right">
+									<button class="neos-button neos-button-danger" title="{neos:backend.translate(id: 'clickToDelete', value: 'Click to delete', source: 'Modules', package: 'TYPO3.Neos')}" data-toggle="modal" href="#form-{identifier}">
+										<i class="icon-trash icon-white"></i>
+									</button>
+									<div class="neos-hide" id="form-{identifier}">
+										<div class="neos-modal">
+											<div class="neos-modal-header">
+												<button type="button" class="neos-close neos-button" data-dismiss="modal"></button>
+												<div class="neos-header">{neos:backend.translate(id: 'form.deleteModalHeader', value: 'Delete form', arguments: {0: "{form.crdate -> f:format.date(format: 'd.m.Y H:i:s')}"}, source: 'Modules')}</div>
+												<div>
+													<div class="neos-subheader">
+														<p>{neos:backend.translate(id: 'form.deleteModalBody', value: 'Delete this form.', source: 'Modules')}</p>
+													</div>
+												</div>
+											</div>
+											<div class="neos-modal-footer">
+												<a href="#" class="neos-button" data-dismiss="modal">{neos:backend.translate(id: 'cancel', value: 'Cancel', source: 'Modules', package: 'TYPO3.Neos')}</a>
+												<button form="postHelper" formaction="{f:uri.action(action: 'delete', arguments: {formIdentifier: form.formIdentifier, form: form})}" type="submit" class="neos-button-danger neos-button" title="Delete">
+													{neos:backend.translate(id: 'form.deleteModalConfirm', value: 'Delete', source: 'Modules')}
+												</button>
+											</div>
+										</div>
+										<div class="neos-modal-backdrop neos-in"></div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</f:for>
+				</tbody>
+			</table>
+		</f:widget.paginate>
+	</div>
+	<div class="neos-footer">
+		<f:link.action action="index" class="neos-button">{neos:backend.translate(id: 'cancel', value: 'Cancel', source: 'Modules', package: 'TYPO3.Neos')}</f:link.action>
+		<button class="neos-button neos-button-danger" title="{neos:backend.translate(id: 'clickToDelete', value: 'Click to delete', source: 'Modules', package: 'TYPO3.Neos')}" data-toggle="modal" href="#forms-{formIdentifier}">
+			{neos:backend.translate(id: 'form.deleteAllButton', value: 'Delete all', source: 'Modules')}
+		</button>
+		<f:link.action action="export" arguments="{formIdentifier: formIdentifier}" class="neos-button neos-button-primary" target="_blank">{neos:backend.translate(id: 'form.clickToExport', value: 'Export', source: 'Modules')}</f:link.action>
+
+		<div class="neos-hide" id="forms-{formIdentifier}">
+			<div class="neos-modal">
+				<div class="neos-modal-header">
+					<button type="button" class="neos-close neos-button" data-dismiss="modal"></button>
+					<div class="neos-header">{neos:backend.translate(id: 'form.deleteAllModalHeader', value: 'Delete all forms', source: 'Modules')}</div>
+					<div>
+						<div class="neos-subheader">
+							<p>{neos:backend.translate(id: 'form.deleteAllModalBody', value: 'Delete all form entries.', source: 'Modules')}</p>
+						</div>
+					</div>
+				</div>
+				<div class="neos-modal-footer">
+					<a href="#" class="neos-button" data-dismiss="modal">{neos:backend.translate(id: 'cancel', value: 'Cancel', source: 'Modules', package: 'TYPO3.Neos')}</a>
+					<button form="postHelper" formaction="{f:uri.action(action: 'deleteAll', arguments: {formIdentifier: formIdentifier})}" type="submit" class="neos-button neos-button-danger" title="Delete">
+						{neos:backend.translate(id: 'form.deleteAllModalConfirm', value: 'Delete', source: 'Modules')}
+					</button>
+				</div>
+			</div>
+			<div class="neos-modal-backdrop neos-in"></div>
+		</div>
+	</div>
+	<f:form action="index" id="postHelper" method="post"></f:form>
+</f:section>

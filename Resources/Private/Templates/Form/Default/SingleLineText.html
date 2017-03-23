@@ -1,0 +1,10 @@
+<f:layout name="TYPO3.Form:Field" />
+<f:section name="field">
+	<f:form.textfield property="{element.identifier}" type="{f:if(condition: element.properties.type, then: element.properties.type, else: 'text')}" id="{element.uniqueIdentifier}" class="{element.properties.elementClassAttribute}" required="{element.required}" errorClass="{element.properties.elementErrorClassAttribute}" />
+	<f:if condition="{element.properties.tooltip}">
+		<span class="input-group-addon">
+			<a href="#tooltip-{element.uniqueIdentifier}" class="open-popup-inline"><i class="{element.properties.tooltipIconClass}"></i></a>
+		</span>
+		<div id="tooltip-{element.uniqueIdentifier}" class="{element.properties.tooltipClass}"><f:translate id="{element.identifier}.tooltip" source="Forms" package="{element.renderingOptions.translationPackage}" /></div>
+	</f:if>
+</f:section>

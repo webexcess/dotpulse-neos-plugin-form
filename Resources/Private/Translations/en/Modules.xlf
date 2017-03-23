@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file original="" product-name="Dotpulse.Form" source-language="en" datatype="plaintext">
+		<body>
+			<trans-unit id="form.label" xml:space="preserve">
+				<source>Forms</source>
+			</trans-unit>
+			<trans-unit id="form.description" xml:space="preserve">
+				<source>Lists all saved forms.</source>
+			</trans-unit>
+
+			<trans-unit id="label.form.formlabel" xml:space="preserve">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="label.form.totals" xml:space="preserve">
+				<source>Number Participations</source>
+			</trans-unit>
+			<trans-unit id="label.form.date" xml:space="preserve">
+				<source>Creation Date</source>
+			</trans-unit>
+
+			<trans-unit id="form.clickToExport" xml:space="preserve">
+				<source>Export</source>
+			</trans-unit>
+			<trans-unit id="form.clickToFix" xml:space="preserve">
+				<source>Fix form entries</source>
+			</trans-unit>
+			
+			<trans-unit id="form.deleteAllButton" xml:space="preserve">
+				<source>Delete all</source>
+			</trans-unit>
+			<trans-unit id="form.deleteModalHeader" xml:space="preserve">
+				<source>Do you really want to remove this form entry "{0}"?</source>
+			</trans-unit>
+			<trans-unit id="form.deleteModalBody" xml:space="preserve">
+				<source>This action can not be undone.</source>
+			</trans-unit>
+			<trans-unit id="form.deleteModalConfirm" xml:space="preserve">
+				<source>Yes, delete this entry</source>
+			</trans-unit>
+
+			<trans-unit id="form.deleteAllModalHeader" xml:space="preserve">
+				<source>Do you really want to delete all form entries?</source>
+			</trans-unit>
+			<trans-unit id="form.deleteAllModalBody" xml:space="preserve">
+				<source>This action can not be undone.</source>
+			</trans-unit>
+			<trans-unit id="form.deleteAllModalConfirm" xml:space="preserve">
+				<source>Yes, delete all</source>
+			</trans-unit>
+
+			<!-- Labels -->
+			<trans-unit id="label.name" xml:space="preserve">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="label.legend" xml:space="preserve">
+				<source>Label data</source>
+			</trans-unit>
+			<trans-unit id="label.updateButton" xml:space="preserve">
+				<source>Label rename</source>
+			</trans-unit>
+
+			<trans-unit id="form.label.deleteModalHeader" xml:space="preserve">
+				<source>Do you really want to delete the label "{0}"?</source>
+			</trans-unit>
+			<trans-unit id="form.label.deleteModalBody" xml:space="preserve">
+				<source>This action will affect all form entries and can not be undone.</source>
+			</trans-unit>
+			<trans-unit id="form.label.deleteModalConfirm" xml:space="preserve">
+				<source>Yes, delete this label</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

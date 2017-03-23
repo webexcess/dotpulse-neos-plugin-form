@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file original="" product-name="Dotpulse.Form" source-language="de" datatype="plaintext">
+		<body>
+			<trans-unit id="title" xml:space="preserve">
+				<source>Anrede</source>
+			</trans-unit>
+			<trans-unit id="title." xml:space="preserve">
+				<source> </source>
+			</trans-unit>
+			<trans-unit id="title.f" xml:space="preserve">
+				<source>Frau</source>
+			</trans-unit>
+			<trans-unit id="title.m" xml:space="preserve">
+				<source>Herr</source>
+			</trans-unit>
+			<trans-unit id="firstname" xml:space="preserve">
+				<source>Vorname</source>
+			</trans-unit>
+			<trans-unit id="firstname.tooltip" xml:space="preserve">
+				<source>Dies ist ein Tooltip-Text.</source>
+			</trans-unit>
+			<trans-unit id="name" xml:space="preserve">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="street" xml:space="preserve">
+				<source>Strasse</source>
+			</trans-unit>
+			<trans-unit id="streetNo" xml:space="preserve">
+				<source>Nr.</source>
+			</trans-unit>
+			<trans-unit id="zip" xml:space="preserve">
+				<source>PLZ</source>
+			</trans-unit>
+			<trans-unit id="city" xml:space="preserve">
+				<source>Ort</source>
+			</trans-unit>
+			<trans-unit id="country" xml:space="preserve">
+				<source>Land</source>
+			</trans-unit>
+			<trans-unit id="country." xml:space="preserve">
+				<source> </source>
+			</trans-unit>
+			<trans-unit id="country.ch" xml:space="preserve">
+				<source>Schweiz</source>
+			</trans-unit>
+			<trans-unit id="country.de" xml:space="preserve">
+				<source>Deutschland</source>
+			</trans-unit>
+			<trans-unit id="country.at" xml:space="preserve">
+				<source>Österreich</source>
+			</trans-unit>
+			<trans-unit id="email" xml:space="preserve">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="phone" xml:space="preserve">
+				<source>Telefon</source>
+			</trans-unit>
+			<trans-unit id="day" xml:space="preserve">
+				<source>Tag</source>
+			</trans-unit>
+			<trans-unit id="month" xml:space="preserve">
+				<source>Monat</source>
+			</trans-unit>
+			<trans-unit id="year" xml:space="preserve">
+				<source>Jahr</source>
+			</trans-unit>
+			<trans-unit id="tags" xml:space="preserve">
+				<source>Inhaltselement mit Tags</source>
+			</trans-unit>
+			<trans-unit id="tags.1" xml:space="preserve">
+				<source>Tag 1</source>
+			</trans-unit>
+			<trans-unit id="tags.2" xml:space="preserve">
+				<source>Tag 2</source>
+			</trans-unit>
+			<trans-unit id="tags.3" xml:space="preserve">
+				<source>Tag 3</source>
+			</trans-unit>
+			<trans-unit id="tags.4" xml:space="preserve">
+				<source>Tag 4</source>
+			</trans-unit>
+			<trans-unit id="tags.5" xml:space="preserve">
+				<source>Tag 5</source>
+			</trans-unit>
+			<trans-unit id="contactType" xml:space="preserve">
+				<source>Kontaktieren Sie mich per:</source>
+			</trans-unit>
+			<trans-unit id="contactType.email" xml:space="preserve">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="contactType.phone" xml:space="preserve">
+				<source>Telefon</source>
+			</trans-unit>
+			<trans-unit id="message" xml:space="preserve">
+				<source>Ihre Nachricht</source>
+			</trans-unit>
+			
+			<trans-unit id="submitButton">
+				<source>Default Submit</source>
+			</trans-unit>
+			<trans-unit id="contactFormSend">
+				<source>Senden</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

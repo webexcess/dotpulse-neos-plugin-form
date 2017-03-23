@@ -1,0 +1,48 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+<f:form.validationResults for="{element.identifier}">
+	<f:if condition="{element.properties.multiElement}">
+		<f:then>
+			<f:if condition="{element.properties.multiElement} == 'first'">
+				<div class="form-row">
+			</f:if>
+			<div class="{element.properties.class}">
+				<div class="{element.properties.containerClassAttribute}{f:if(condition: element.required, then: ' is-required')}{f:if(condition: element.properties.tooltip, then: ' input-group')}{f:if(condition: validationResults.flattenedErrors, then: ' has-error')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+		</f:then>
+		<f:else>
+			<div class="{element.properties.containerClassAttribute}{f:if(condition: element.required, then: ' is-required')}{f:if(condition: element.properties.tooltip, then: ' input-group')}{f:if(condition: validationResults.flattenedErrors, then: ' has-error')}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+		</f:else>
+	</f:if>
+
+		<f:render section="field" />
+
+		<f:if condition="{validationResults.flattenedErrors}">
+			<div>
+				<f:for each="{validationResults.errors}" as="error">
+					<label id="{element.uniqueIdentifier}-error" class="form-help" for="{element.uniqueIdentifier}">
+						{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}
+					</label>
+				</f:for>
+			</div>
+		</f:if>
+
+		<label for="{element.uniqueIdentifier}" class="control-label"><f:translate id="{element.identifier}" source="Forms" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></label>
+		
+		<i class="bar"></i>
+
+	<f:if condition="{element.properties.multiElement}">
+		<f:then>
+					<f:comment>closing: .{element.properties.containerClassAttribute}</f:comment>
+					</div>
+				<f:comment>closing: .{element.properties.class}</f:comment>
+				</div>
+			<f:if condition="{element.properties.multiElement} == 'last'">
+			<f:comment>closing: .form-row</f:comment>
+				</div>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:comment>closing: .{element.properties.containerClassAttribute}</f:comment>
+			</div>
+		</f:else>
+	</f:if>
+</f:form.validationResults>
