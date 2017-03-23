@@ -1,0 +1,7 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+<f:if condition="{page.label}">
+	<h2><f:translate id="{page.label}" source="Forms" package="{page.renderingOptions.translationPackage}" /></h2>
+</f:if>
+<f:for each="{page.elements}" as="element">
+	<form:renderRenderable renderable="{element}" />
+</f:for>

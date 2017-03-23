@@ -8,13 +8,9 @@
 		<f:render section="field" />
 		<f:if condition="{validationResults.flattenedErrors}">
 			<f:for each="{validationResults.errors}" as="error">
-				<label id="{element.uniqueIdentifier}-error" class="form-help" for="{element.uniqueIdentifier}">{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}</label>
+				<small class="text-muted">{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}</small>
 			</f:for>
 		</f:if>
-		<f:if condition="{element.properties.renderLabel}">
-			<label for="{element.uniqueIdentifier}" class="control-label"><f:translate id="{element.identifier}" source="Forms" package="{element.renderingOptions.translationPackage}" /><f:if condition="{element.required}"><f:render partial="TYPO3.Form:Field/Required" /></f:if></label>
-		</f:if>
-		<i class="bar"></i>
 		<f:if condition="{element.properties.elementDescription}">
 			<small class="text-muted">{element.properties.elementDescription}</small>
 		</f:if>

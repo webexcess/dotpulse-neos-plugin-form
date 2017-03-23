@@ -3,13 +3,14 @@ identifier: 'contact'
 label: 'Contact'
 renderingOptions:
   submitButtonLabel: 'contactFormSend'
+  #renderSubmitButton: FALSE
 renderables:
   -
     type: 'TYPO3.Form:Page'
     identifier: 'page-one'
     renderables:
       -
-        type: 'TYPO3.Form:Section'
+        type: 'Dotpulse.Form:Column'
         identifier: 'left'
         properties:
           colRenderPosition: 'first'
@@ -22,8 +23,8 @@ renderables:
               options:
                 f: 'f'
                 m: 'm'
-            validators:
-              - identifier: 'TYPO3.Flow:NotEmpty'
+            #validators:
+            #  - identifier: 'TYPO3.Flow:NotEmpty'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'firstname'
@@ -31,57 +32,68 @@ renderables:
               - identifier: 'TYPO3.Flow:NotEmpty'
             properties:
               tooltip: 'This is a Tooltip'
+              elementDescription: 'Hello World'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'name'
-            validators:
-              - identifier: 'TYPO3.Flow:NotEmpty'
+            #validators:
+            #  - identifier: 'TYPO3.Flow:NotEmpty'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'street'
             properties:
-              multiElement: 'first'
-              class: 'col-sm-8'
+              colElement: 'first'
+              #colClassAttribute: 'col-sm-8'
+              colClassAttribute: 'columns small-8'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'streetNo'
             properties:
-              multiElement: 'last'
-              class: 'col-sm-4'
+              colElement: 'last'
+              #colClassAttribute: 'col-sm-4'
+              colClassAttribute: 'columns small-4'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'zip'
             properties:
-              multiElement: 'first'
-              class: 'col-sm-4'
+              colElement: 'first'
+              #colClassAttribute: 'col-sm-4'
+              colClassAttribute: 'columns small-4'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'city'
             properties:
-              multiElement: 'last'
-              class: 'col-sm-8'
+              colElement: 'last'
+              #colClassAttribute: 'col-sm-8'
+              colClassAttribute: 'columns small-8'
           -
             type: 'TYPO3.Form:SingleSelectDropdown'
             identifier: 'country'
             properties:
+              prependOption: TRUE
               options:
-                '': ''
                 ch: 'ch'
                 de: 'de'
                 at: 'at'
+            #validators:
+            #  - identifier: 'TYPO3.Flow:NotEmpty'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'email'
             validators:
-              - identifier: 'TYPO3.Flow:NotEmpty'
+              #- identifier: 'TYPO3.Flow:NotEmpty'
               - identifier: 'TYPO3.Flow:EmailAddress'
             properties:
               type: 'email'
+              placeholder: TRUE
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'phone'
+          -
+            type: 'TYPO3.Form:Checkbox'
+            identifier: 'newsletter'
       -
-        type: 'TYPO3.Form:Section'
+        type: 'Dotpulse.Form:Column'
         identifier: 'right'
         properties:
           colRenderPosition: 'last'
@@ -90,20 +102,23 @@ renderables:
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'day'
             properties:
-              multiElement: 'first'
-              class: 'col-sm-4'
+              colElement: 'first'
+              #colClassAttribute: 'col-sm-4'
+              colClassAttribute: 'columns small-4'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'month'
             properties:
-              multiElement: 'middle'
-              class: 'col-sm-4'
+              colElement: 'middle'
+              #colClassAttribute: 'col-sm-4'
+              colClassAttribute: 'columns small-4'
           -
             type: 'TYPO3.Form:SingleLineText'
             identifier: 'year'
             properties:
-              multiElement: 'last'
-              class: 'col-sm-4'
+              colElement: 'last'
+              #colClassAttribute: 'col-sm-4'
+              colClassAttribute: 'columns small-4'
           -
             type: 'TYPO3.Form:MultipleSelectDropdown'
             identifier: 'tags'
@@ -126,6 +141,10 @@ renderables:
             identifier: 'message'
             properties:
               rows: 8
+              placeholder: TRUE
+          -
+            type: 'Dotpulse.Form:Submit'
+            identifier: 'submit'
 finishers:
   -
     identifier: 'TYPO3.Form:Confirmation'

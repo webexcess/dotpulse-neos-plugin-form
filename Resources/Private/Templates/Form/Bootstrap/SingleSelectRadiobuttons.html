@@ -1,4 +1,4 @@
-<f:layout name="TYPO3.Form:FieldCheckboxAndRadio" />
+<f:layout name="TYPO3.Form:Field" />
 <f:section name="field">
 	<f:for each="{element.properties.options}" as="label" key="value">
 		<label class="{element.properties.elementClassAttribute}">
@@ -10,8 +10,7 @@
 					<f:form.radio property="{element.identifier}" value="{value}" errorClass="{element.properties.elementErrorClassAttribute}" />
 				</f:else>
 			</f:if>
-			<i class="helper"></i>
-			<span><f:translate id="{element.identifier}.{value}" source="Forms" package="{element.renderingOptions.translationPackage}" /></span>
+			<f:translate id="{element.identifier}.{value}" source="Forms" package="{element.renderingOptions.translationPackage}" />
 
 			<f:if condition="{element.properties.renderLabel}==0">
 				<f:if condition="{element.required}">

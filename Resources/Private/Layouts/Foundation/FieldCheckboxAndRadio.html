@@ -1,0 +1,24 @@
+{namespace form=TYPO3\Form\ViewHelpers}
+<f:form.validationResults for="{element.identifier}">
+	<f:if condition="{element.properties.colElement}=='first'">
+		<div class="{element.properties.rowClassAttribute}">
+	</f:if>
+
+	<div class="{f:if(condition: element.properties.colElement, then: '{element.properties.colClassAttribute} ')}{element.properties.containerClassAttribute}"<f:if condition="{element.rootForm.renderingOptions.previewMode}"> data-element="{form:form.formElementRootlinePath(renderable:element)}"</f:if>>
+		<f:render section="field" />
+
+		<f:if condition="{validationResults.flattenedErrors}">
+			<f:for each="{validationResults.errors}" as="error">
+				<span class="form-error is-visible">{error -> f:translate(id: error.code, arguments: error.arguments, package: '{element.renderingOptions.translationErrorPackage}', source: 'ValidationErrors')}</span>
+			</f:for>
+		</f:if>
+
+		<f:if condition="{element.properties.elementDescription}">
+			<p class="help-text" id="{element.uniqueIdentifier}HelpText">{element.properties.elementDescription}</p>
+		</f:if>
+	</div>
+
+	<f:if condition="{element.properties.colElement}=='last'">
+		</div>
+	</f:if>
+</f:form.validationResults>

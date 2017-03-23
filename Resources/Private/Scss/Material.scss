@@ -55,7 +55,6 @@ fieldset {
 }
 
 .form-row {
-	@extend .row;
 	margin-top: ($mf-gap * 1.5);
 	margin-bottom: ($mf-gap * 1.5);
 
@@ -108,7 +107,7 @@ fieldset {
 	.control-label {
 		position: absolute;
 		top: ($mf-font-size / 4);
-		left: 0;
+		//left: 0;
 		pointer-events: none;
 		padding-left: $mf-spacer;
 		z-index: 1;
@@ -149,6 +148,11 @@ fieldset {
 		color: transparent;
 		transition: all $mf-transition-speed ease;
 		box-shadow: none;
+
+		&::placeholder {
+			opacity: 0;
+			transition: opacity $mf-transition-speed ease;
+		}
 	}
 
 	input[type="file"] {
@@ -170,11 +174,15 @@ fieldset {
 	textarea.has-value {
 		color: $mf-input-color;
 
+		&::placeholder {
+			opacity: 1;
+		}
+
 		~ .control-label {
 			font-size: $mf-active-font-size;
 			color: $mf-active-color;
 			top: $mf-active-top;
-			left: 0;
+			//left: 0;
 		}
 	}
 
@@ -240,8 +248,27 @@ fieldset {
 }
 
 // Radio & Checkbox
+%radio-inline {
+	display: inline-block;
+	margin-right: 2rem;
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
+%checkbox-inline {
+	display: inline-block;
+	margin-right: 2rem;
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
+
 .form-checkbox,
 .form-radio {
+	margin-bottom: ($mf-gap * 1.5) - $mf-font-size;
+
 	label {
 		position: relative;
 		cursor: pointer;
@@ -260,23 +287,9 @@ fieldset {
 	}
 }
 
-.form-checkbox,
-.form-radio {
-	margin-bottom: ($mf-gap * 1.5) - $mf-font-size;
-}
-
 .radio + .radio,
 .checkbox + .checkbox {
 	margin-top: $mf-font-size;
-}
-
-%radio-inline {
-	display: inline-block;
-	margin-right: 2rem;
-
-	&:last-child {
-		margin-right: 0;
-	}
 }
 
 .radio {
@@ -284,7 +297,7 @@ fieldset {
 
 	.helper {
 		position: absolute;
-		top: $mf-radio-margin;
+		top: $mf-radio-top;
 		left: $mf-radio-margin;
 		cursor: pointer;
 		display: block;
@@ -352,22 +365,15 @@ fieldset {
 }
 
 
-%checkbox-inline {
-	display: inline-block;
-	margin-right: 2rem;
-
-	&:last-child {
-		margin-right: 0;
-	}
-}
-
 .checkbox {
 	margin-bottom: $mf-font-size;
 
 	.helper {
 		color: $mf-border-color;
 		position: absolute;
-		top: $mf-checkbox-top;
+		//top: $mf-checkbox-top;
+		top: 50%;
+		transform: translateY(-50%);
 		left: 0;
 		width: $mf-font-size;
 		height: $mf-font-size;
@@ -456,21 +462,21 @@ fieldset {
 	vertical-align: middle;
 }
 
-.spinner-icon {
-	display: block;
-	font-size: 8px;
-	margin-top: 2px;
-	cursor: pointer;
-
-	&.spin-up {
-		margin-top: 5px;
-	}
-	&:hover {
-		transition: transform 0.2s ease;
-		transform: scale(1.3);
-		color: darken($greyish-brown, 35%);
-	}
-}
+//.spinner-icon {
+//	display: block;
+//	font-size: 8px;
+//	margin-top: 2px;
+//	cursor: pointer;
+//
+//	&.spin-up {
+//		margin-top: 5px;
+//	}
+//	&:hover {
+//		transition: transform 0.2s ease;
+//		transform: scale(1.3);
+//		color: darken($greyish-brown, 35%);
+//	}
+//}
 
 
 .has-error {
