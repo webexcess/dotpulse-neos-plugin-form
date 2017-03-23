@@ -2,7 +2,7 @@
     "name": "dotpulse/form",
     "description": "Extends the default form plugin. Created with ♥ and passion by webexcess.ch",
     "type": "typo3-flow-plugin",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "license": "MIT",
     "foundation": {
         "name": "dotpulse AG",

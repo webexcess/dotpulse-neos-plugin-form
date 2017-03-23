@@ -9,6 +9,11 @@ if (typeof $$ === 'function') {
 	mfLIB = jQuery;
 }
 
+if (Element && !Element.prototype.matches) {
+	let proto = Element.prototype;
+	proto.matches = proto.matchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector || proto.webkitMatchesSelector;
+}
+
 class MF {
 	constructor(parameter, context) {
 		if (parameter instanceof MF) {
@@ -42,16 +47,28 @@ class MF {
 		return this;
 	}
 
-	trigger (event) {
+	trigger (eventName = 'change') {
 		return this.each(node => {
-			let ev;
+			let eventTrigger;
 			try {
-				ev = new window.CustomEvent(event);
-			} catch (e) {
-				ev = document.createEvent('CustomEvent');
-				ev.initCustomEvent(event, true, true);
+				eventTrigger = new window.CustomEvent(eventName);
+			} catch (error) {
+				if (document.createEvent) {
+					eventTrigger = document.createEvent('HTMLEvents');
+					// eventTrigger = document.createEvent('CustomEvent');
+					eventTrigger.initEvent(eventName, true, true);
+				} else {
+					eventTrigger = document.createEventObject();
+					eventTrigger.eventType = eventName;
+				}
+				eventTrigger.eventName = eventName;
 			}
-			node.dispatchEvent(ev);
+
+			if (document.createEvent) {
+				node.dispatchEvent(eventTrigger);
+			} else {
+				node.fireEvent('on' + eventTrigger.eventType, eventTrigger);
+			}
 		});
 	}
 
@@ -80,6 +97,14 @@ class MF {
 			let min = parseInt(element.min);
 			let max = parseInt(element.max);
 			let step = parseInt(element.step) || 1;
+
+			if (isNaN(min)) {
+				min = false;
+			}
+			if (isNaN(max)) {
+				max = false;
+			}
+
 			function noValue() {
 				if (!element.value && element.value != 0) {
 					element.value = 0;
@@ -92,13 +117,35 @@ class MF {
 			spinner.appendChild(down);
 			up.addEventListener('click', () => {
 				noValue();
-				element.stepUp();
-				new MF(element).trigger('input');
+				try {
+					element.stepUp();
+				} catch (error) {
+					let value = parseInt(element.value) || 0;
+					if (max !== false && value >= max) {
+						value = max;
+					} else {
+						value += step;
+					}
+					element.value = value;
+				} finally {
+					new MF(element).trigger('input');
+				}
 			});
 			down.addEventListener('click', () => {
 				noValue();
-				element.stepDown();
-				new MF(element).trigger('input');
+				try {
+					element.stepDown();
+				} catch (error) {
+					let value = parseInt(element.value) || 0;
+					if (min !== false && value <= min) {
+						value = min;
+					} else {
+						value -= step;
+					}
+					element.value = value;
+				} finally {
+					new MF(element).trigger('input');
+				}
 			});
 			new MF(element).handle(callback, time);
 			element.parentNode.appendChild(spinner);
