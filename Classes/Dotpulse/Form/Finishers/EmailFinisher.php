@@ -48,6 +48,7 @@ class EmailFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher
      * @var array
      */
     protected $defaultOptions = array(
+        'useRecipientFromInspector' => true,
         'recipientName' => '',
         'senderName' => '',
         'excludeFields' => array(),
@@ -258,27 +259,29 @@ class EmailFinisher extends \TYPO3\Form\Core\Model\AbstractFinisher
             }
         }
 
-        // check if recipient name is provided by the node
-        // use the recipientName defined in the form as fallback
-        if ($optionName === 'recipientName') {
-            $renderingOptions = $this->finisherContext->getFormRuntime()->getRenderingOptions();
-            $node = $renderingOptions['node'];
-            if ($node->hasProperty('recipientName')) {
-                $recipientName = $node->getProperty('recipientName');
-                if(!empty($recipientName)) {
-                    return $recipientName;
+        if ($this->parseOption('useRecipientFromInspector') === true) {
+            // check if recipient name is provided by the node
+            // use the recipientName defined in the form as fallback
+            if ($optionName === 'recipientName') {
+                $renderingOptions = $this->finisherContext->getFormRuntime()->getRenderingOptions();
+                $node = $renderingOptions['node'];
+                if ($node->hasProperty('recipientName')) {
+                    $recipientName = $node->getProperty('recipientName');
+                    if(!empty($recipientName)) {
+                        return $recipientName;
+                    }
                 }
             }
-        }
-        // check if recipient address is provided by the node
-        // use the recipientAddress defined in the form as fallback
-        if ($optionName === 'recipientAddress') {
-            $renderingOptions = $this->finisherContext->getFormRuntime()->getRenderingOptions();
-            $node = $renderingOptions['node'];
-            if ($node->hasProperty('recipientAddress')) {
-                $recipientAddress = $node->getProperty('recipientAddress');
-                if(!empty($recipientAddress) && filter_var($recipientAddress, FILTER_VALIDATE_EMAIL)) {
-                    return $recipientAddress;
+            // check if recipient address is provided by the node
+            // use the recipientAddress defined in the form as fallback
+            if ($optionName === 'recipientAddress') {
+                $renderingOptions = $this->finisherContext->getFormRuntime()->getRenderingOptions();
+                $node = $renderingOptions['node'];
+                if ($node->hasProperty('recipientAddress')) {
+                    $recipientAddress = $node->getProperty('recipientAddress');
+                    if(!empty($recipientAddress) && filter_var($recipientAddress, FILTER_VALIDATE_EMAIL)) {
+                        return $recipientAddress;
+                    }
                 }
             }
         }
